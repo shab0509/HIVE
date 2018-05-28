@@ -1,0 +1,81 @@
+Show databases;                               
+ [For displaying the database]
+ 
+drop database if exists hivedb;               
+[For deleting the database]
+
+drop database if exists hivedb cascade;       
+[Remove all tables before database gets deleted.]
+
+set hive.cli.print.header=true;           
+[For displaying the current database in the terminal]
+
+set hive.cli.print.current.db=true;           
+[For displaying the current database in the terminal]
+
+HOW TO CREATE INTERNALTABLE IN HIVE--------------------------------
+create table if not exists mantab(id int, name string, sal int , loc string)
+             > row format delimited
+             > fields terminated by '|'
+             > lines terminated by '\n'
+             > stored as textfile;
+[For creating the table in the database]
+
+create table mantab1(id int, name string, sal int, loc string)
+    > row format delimited
+    > fields terminated by '|'
+    > lines terminated by '\n'
+    > stored as textfile;
+[For creating the table in the database]
+
+HOW TO CREATE EXTERNAL TABLE IN HIVE--------------------------------
+
+create external table if not exists mantab(id int, name string, sal int , loc string)
+             > row format delimited
+             > fields terminated by '|'
+             > lines terminated by '\n'
+             > stored as textfile;
+[For creating the table in the database]
+
+create external table mantab1(id int, name string, sal int, loc string)
+    > row format delimited
+    > fields terminated by '|'
+    > lines terminated by '\n'
+    > stored as textfile;
+[For creating the table in the database]
+
+HOW TO KNOW THE INFORMATION ABOUT TABLES [ DESCRIBE ]-----------------------------------------------
+
+Desc mantab;
+Describe extended mantab;
+Describe formatted mantab;
+ 
+
+HOW TO LOAD THE DATA INTO HIVE TABLES – IN LOCAL MODE------------------------------------------------------------
+load data local inpath '/home/gopalkrishna/Desktop/hive/input/empdata.log' into table mantab;
+
+HOW TO LOAD THE DATA INTO HIVE TABLES – IN HDFS MODE------------------------------------------------------------
+load data inpath '/home/gopalkrishna/Desktop/hive/input/empdata.log' into table mantab;
+[to load the data from the HDFS]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
