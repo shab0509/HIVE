@@ -1,0 +1,93 @@
+Static partition--------------------------------------------------------------------------------------------------------------------
+
+1.
+create table emp(id int,name string,sal int)
+Partitioned by (loc string)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY '\t'
+LINES TERMINATED BY '\n'
+STORED AS TEXTFILE;
+
+load data local inpath '/home/gopalkrishna/Desktop/hive/input/temp.log' into table emp partition (loc= 'Hyderabad');
+load data local inpath '/home/gopalkrishna/Desktop/hive/input/temp.log' into table emp partition (loc= 'Pune');
+load data local inpath '/home/gopalkrishna/Desktop/hive/input/temp.log' into table emp partition (loc= 'Bangalore');
+load data local inpath '/home/gopalkrishna/Desktop/hive/input/temp.log' into table emp partition (loc= 'Mumbai');
+
+Manually we need to distribute the data based on any column then we need to manually laod the data as above command.
+
+2. 
+create table sba(id string,reptype string,cost string,year int)
+Partitioned by (area string)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY '|'
+LINES TERMINATED BY '\n'
+STORED AS TEXTFILE;
+
+load data local inpath '/home/gopalkrishna/Desktop/hive/input/sba/SBA_ML_Data.log' into table sba partition(area='MALAWI');
+load data local inpath '/home/gopalkrishna/Desktop/hive/input/sba/SBA_NG_Data.log' into table sba partition(area='NIGERIA');
+load data local inpath '/home/gopalkrishna/Desktop/hive/input/sba/SBA_NM_Data.log' into table sba partition(area='NAMEBIA');
+load data local inpath '/home/gopalkrishna/Desktop/hive/input/sba/SBA_TZ_Data.log' into table sba partition(area='TANZANIA');
+load data local inpath '/home/gopalkrishna/Desktop/hive/input/sba/SBA_UG_Data.log' into table sba partition(area='UGANDA');
+
+Dynamic partitioning --------------------------------------------------------------------------------------------------------------- 
+
+set hive.exec.dynamic.partition.mode=nonstrict;  (for dynamic partition)
+mode:  strict for static partition
+       non-strict for dynamic partition
+
+set hive.exec.dynamic.partition=true;
+
+1.
+create table emp (id int,name string,sal int,loc string)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY '\t'
+LINES TERMINATED BY '\n'
+STORED AS TEXTFILE;
+
+load data local inpath '/home/gopalkrishna/Desktop/hive/input/empdetails.log' into table emp;
+
+create table dynemp (id int,name string,sal int ) partitioned by (loc string)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY '\t'
+LINES TERMINATED BY '\n'
+STORED AS TEXTFILE;
+
+load data local inpath '/home/gopalkrishna/Desktop/hive/input/empdetails.log' into table emp;
+
+insert overwrite table dynamicpart partition (year) select * from lop;
+
+2.
+create table sba(id string,reptype string,sal string,area string,year int)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY '|'
+LINES TERMINATED BY '\n'
+STORED AS TEXTFILE;
+
+load data local inpath '/home/gopalkrishna/Desktop/hive/input/sba/sbacomplete.log' into table sbaD;
+
+create table dynsba2(id string,reptype string,sal string)
+partitioned by (area string,year int)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY '|'
+LINES TERMINATED BY '\n'
+STORED AS TEXTFILE;
+
+insert overwrite table dynsba2 partition (area) select * from dynsba1;
+
+create table dynsba5(id string,reptype string,sal string )
+partitioned by (area string)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY '|'
+LINES TERMINATED BY '\n'
+STORED AS TEXTFILE;
+
+insert overwrite table dynsba2 partition (area) select id,reptype,sal,area from dynsba1;
+
+create table dynsba6(id string,rep string,sal string,year int)
+partitioned by (area string)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY '|'
+LINES TERMINATED BY '\n'
+STORED AS TEXTFILE;
+
+insert overwrite table dynsba2 partition (area) select id,rep,sal,area from dynsba1;
