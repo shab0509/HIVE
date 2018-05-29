@@ -1,2 +1,53 @@
-  hi 
-  
+Static partition--------------------------------------------------------------------------------------------------------------------
+
+create table emp(id int,name string,sal int)
+Partitioned by (loc string)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY '\t'
+LINES TERMINATED BY '\n'
+STORED AS TEXTFILE;
+
+load data local inpath '/home/gopalkrishna/Desktop/hive/input/temp.log' into table emp partition (loc= 'Hyderabad');
+load data local inpath '/home/gopalkrishna/Desktop/hive/input/temp.log' into table emp partition (loc= 'Pune');
+load data local inpath '/home/gopalkrishna/Desktop/hive/input/temp.log' into table emp partition (loc= 'Bangalore');
+load data local inpath '/home/gopalkrishna/Desktop/hive/input/temp.log' into table emp partition (loc= 'Mumbai');
+
+
+
+_______________________________________________
+
+/home/gopalkrishna/Desktop/hive/input/part1.log
+/home/gopalkrishna/Desktop/hive/input/CaseInput.log
+________________________________________________
+
+
+Dynamic partitioning --------------------------------------------------------------------------------------------------------------- 
+
+set hive.exec.dynamic.partition.mode=nonstrict;  (for dynamic partition)
+mode:  strict for static partition
+       non-strict for dynamic partition
+
+set hive.exec.dynamic.partition=true;
+
+create table emp (id int,name string,sal int,loc string)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY '\t'
+LINES TERMINATED BY '\n'
+STORED AS TEXTFILE;
+
+
+create table dynemp (id int,name string,sal int ) partitioned by (loc string)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY '\t'
+LINES TERMINATED BY '\n'
+STORED AS TEXTFILE;
+
+load data local inpath '/home/gopalkrishna/Desktop/hive/input/empdetails.log' into table emp;
+
+insert overwrite table dynamicpart partition (year) select * from lop;
+
+ 
+
+
+
+
