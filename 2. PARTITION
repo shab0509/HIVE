@@ -31,7 +31,7 @@ load data local inpath '/home/gopalkrishna/Desktop/hive/input/sba/SBA_UG_Data.lo
 
 Dynamic partitioning --------------------------------------------------------------------------------------------------------------- 
 
-set hive.exec.dynamic.partition.mode=nonstrict;  (for dynamic partition)
+set hive.exec.dynamic.partition.mode=nonstrict;  (if u want to load from dynamic partition we must have to enable the strict mode to nonstrict)
 mode:  strict for static partition
        non-strict for dynamic partition
 
