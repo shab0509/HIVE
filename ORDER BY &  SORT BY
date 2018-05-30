@@ -1,0 +1,24 @@
+ORDER BY : Irrespective of the volume of the data ORDER BY clause will make use of single reducer 
+to sort the data.
+select * from <tablename> order by <column name>;
+
+suppose we want to increase the number of reducer
+        set mapred.reduce task='5';
+But the number of the reducer in the compile  time is 1 
+Order by never change the number of reducer.
+
+SORT BY : where as SORT BY clause based on the volume of the data only respective number of reducer will be decided
+select * from <tablename> sort by <column name>;
+
+suppose we want to increase the number of reducer
+        set mapred.reduce task='5';
+But the number of the reducer is not specified.
+5 reducer running but 1 reducer only running based on our data.
+
+Note : Incase of large datas sets sorting SORTBY only preferable over ORDERBY with respect to performance.
+
+Distribute BY : kinda of group by operation.
+
+SELECT Dept,count(*) FROM employee Distribute BY DEPT;
+
+SELECT Dept,count(*) FROM employee Distribute BY DEPT sort by Bankid ;[both grouping and sorting are running on the data]
