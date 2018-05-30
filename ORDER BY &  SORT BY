@@ -17,7 +17,7 @@ But the number of the reducer is not specified.
 
 Note : Incase of large datas sets sorting SORTBY only preferable over ORDERBY with respect to performance.
 
-Distribute BY : kinda of group by operation.
+Distribute BY with sort by: kinda of group by operation but works with sort by only  .
 
 SELECT Dept,count(*) FROM employee Distribute BY DEPT;
 
