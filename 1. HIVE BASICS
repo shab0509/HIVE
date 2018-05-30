@@ -58,24 +58,6 @@ HOW TO LOAD THE DATA INTO HIVE TABLES – IN HDFS MODE--------------------------
 load data inpath '/home/gopalkrishna/Desktop/hive/input/empdata.log' into table mantab;
 [to load the data from the HDFS]
 
-Ordering Hive tables-----------------------------------------------------------------------------------------------
-
-Rename: alter table <tablename> rename to <newtablename>;
-        alter table mantab1 rename to tab001;
-
-Change Columnname: alter table <tablename> change <columnname> <newcolumnname> <datatype>
-        alter table mantab change loc area string; 
-
-Replace Column: ALTER TABLE name REPLACE COLUMNS (col_spec[, col_spec ...])
-                alter table mantab replace column ()  
-
-Add column :alter table <tablename> add columns(<columnname> <datatype>, <columnname> <datatype>,........... );
-            alter table mantab add columns(subarea string);
-
-Drop column : ALTER TABLE name DROP [COLUMN] column_name; [not supported in current version of hive]
-
-
-
 
 
 
