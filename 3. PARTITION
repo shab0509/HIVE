@@ -65,29 +65,29 @@ STORED AS TEXTFILE;
 
 load data local inpath '/home/gopalkrishna/Desktop/hive/input/sba/sbacomplete.log' into table sbaD;
 
-create table dynsba2(id string,reptype string,sal string)
+create table sba1(id string,reptype string,sal string)
 partitioned by (area string,year int)
 ROW FORMAT DELIMITED
 FIELDS TERMINATED BY '|'
 LINES TERMINATED BY '\n'
 STORED AS TEXTFILE;
 
-insert overwrite table dynsba2 partition (area) select * from dynsba1;
+insert overwrite table sba1 partition (area) select * from dynsba1;
 
-create table dynsba5(id string,reptype string,sal string )
+create table sba2(id string,reptype string,sal string,year int )
 partitioned by (area string)
 ROW FORMAT DELIMITED
 FIELDS TERMINATED BY '|'
 LINES TERMINATED BY '\n'
 STORED AS TEXTFILE;
 
-insert overwrite table dynsba2 partition (area) select id,reptype,sal,area from dynsba1;
+insert overwrite table sba2 partition (area) select id,reptype,sal,year,area from dynsba1;
 
-create table dynsba6(id string,rep string,sal string,year int)
-partitioned by (area string)
+create table sba21(id string,reptype string,sal string,year int)
+partitioned by (year string)
 ROW FORMAT DELIMITED
 FIELDS TERMINATED BY '|'
 LINES TERMINATED BY '\n'
 STORED AS TEXTFILE;
 
-insert overwrite table dynsba2 partition (area) select id,rep,sal,area from dynsba1;
+insert overwrite table  sba21 partition (area) select id,rep,sal,area,year from sba2;
