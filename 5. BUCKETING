@@ -45,7 +45,7 @@ If we are not satisfied with partitioning becoz of less redundancy then we go wi
   load data inpath '/hive/sbacomplete.log' into table B1;
   
   create table B2 (id string,rep string,sal string,area string,year int)
-  clustered by (year) into 4 buckets     [bucketing is done on an integer column]
+  clustered by (area) into 4 buckets      
   row format delimited 
   fields terminated by '|'
   stored as textfile;
@@ -57,34 +57,35 @@ If we are not satisfied with partitioning becoz of less redundancy then we go wi
   
   3. Partitioning with bucketing
   
+  create table sba (id string,rep string,sal string,area string,year int)
+  row format delimited 
+  fields terminated by '|'
+  stored as textfile;  
+  
+  load data local inpath '/home/gopalkrishna/Desktop/hive/input/sba/sbacomplete.log' into table partbucket;
+  
+ create table partbucket(id string, rep string, sal string,year int)
+ partitioned by (area string)
+ clustered by (year) into 3 buckets
+ row format delimited 
+ fields terminated by '|'
+ stored as textfile;
+  
+ insert overwrite table partbucket partition(area) select id, rep, sal, year,area from sba;
   
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  --------------------------------------------------------------------------------------------------------------------------
+  create table sbacopy (id string,rep string,sal string,area string,year int)
+  row format delimited 
+  fields terminated by '|'
+  stored as textfile;  
+   
+ create table partbucket11(id string, rep string, sal string,year int)
+ partitioned by (area string)
+ clustered by (year) into 3 buckets
+ row format delimited 
+ fields terminated by '|'
+ stored as textfile;
   
   
   
