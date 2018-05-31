@@ -1,0 +1,13 @@
+----- Create Table as Select 
+
+create table ctas (degree string, branch string, lang string, result string)
+row format delimited 
+fields terminated by ','
+lines terminated by '\n'
+stored as textfile;
+
+load data local inpath '/home/gopalkrishna/Desktop/hive/input/case.log' into table ctas;
+
+create table ctas1 as select degree,branch,result from ctas;
+
+
