@@ -1,0 +1,19 @@
+array : for homogenous data
+struct : for hetrogenous data
+map : for yes/no
+
+
+create table comp( id bigint,
+                   name struct(cname : string,alias : string),
+                   address struct(roadno : int,street : string, city : string,state : string),
+                   growth array(int),
+                   country map(string,boolean))
+ row format delimited
+ fields terminated by '|'
+ lines terminated by '\n'
+ stored as textfile
+ 
+ 
+ 
+ 
+                   
