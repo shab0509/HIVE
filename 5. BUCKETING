@@ -12,7 +12,7 @@ If we are not satisfied with partitioning becoz of less redundancy then we go wi
  Partitioning : Follows flexible Schema | user have control
  Bucketing    : Follows Fixed Schema    | user have no control
  
- ----- set hive.enforce.bucketing = true; [By default the abpve parameter value is false , set it to true for bucketing]
+ --------------- set hive.enforce.bucketing=true; [By default the above parameter value is false , set it to true for bucketing]
    
                   
   1. Bucketing based on integer value [If bucketing is done on integer then hashing will be normal]
