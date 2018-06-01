@@ -1,0 +1,41 @@
+1. SEQUENCE FILE FORMAT
+
+create table seqbasetab (id int , name string , sal int ,loc string)
+row format delimited 
+fields terminated by '\t'
+lines terminated by '\n'
+stored as SEQUENCEFILE;
+
+ insert overwrite table seqbasetab select * from basetab;
+
+
+
+2. RC FILE FORMAT (RECORD COLUMNAR)
+
+create table rcbasetab (id int , name string , sal int ,loc string)
+row format delimited 
+fields terminated by '\t'
+lines terminated by '\n'
+stored as RCFILE;
+
+insert overwrite table rcbasetab select * from basetab;
+
+3. ORC FILE FORMAT (OPTIMISED RECORD COLUMNAR)
+
+create table orcbasetab (id int , name string , sal int ,loc string)
+row format delimited 
+fields terminated by '\t'
+lines terminated by '\n'
+stored as ORCFILE;
+
+insert overwrite table orcbasetab select * from basetab;
+
+4. PARQUET FILE FORMAT (OPTIMISED RECORD COLUMNAR)
+
+create table parquetbasetab (id int , name string , sal int ,loc string)
+row format delimited 
+fields terminated by '\t'
+lines terminated by '\n'
+stored as PARQUETFILE;
+
+insert overwrite table parquetbasetab select * from basetab;
