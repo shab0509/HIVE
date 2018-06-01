@@ -67,7 +67,7 @@ FIELDS TERMINATED BY '|'
 LINES TERMINATED BY '\n'
 STORED AS TEXTFILE;
 
-load data local inpath '/home/gopalkrishna/Desktop/hive/input/sba/sbacomplete.log' into table sbaD;
+load data local inpath '/home/gopalkrishna/Desktop/hive/input/sba/sbacomplete.log' into table sba;
 
 create table sba1(id string,reptype string,sal string)
 partitioned by (area string,year int)
