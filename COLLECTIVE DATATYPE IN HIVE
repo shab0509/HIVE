@@ -2,18 +2,30 @@ array : for homogenous data
 struct : for hetrogenous data
 map : for yes/no
 
+1. file name : CompanyData1.log 
+create table colldata( id bigint,
+                          name struct <cname:string, aname:string>,
+                          address struct <number:int, street:string, city:string,state:string>,
+                          growth array<int>,
+                          country map<string,boolean>
+                        )
+                        row format delimited 
+                        fields terminated by '|'
+                        collection items terminated by ','
+                        map keys terminated by ':'
+                        lines terminated by '\n'
+                        stored as textfile;
+                        
 
-create table comp( id bigint,
-                   name struct(cname : string,alias : string),
-                   address struct(roadno : int,street : string, city : string,state : string),
-                   growth array(int),
-                   country map(string,boolean))
- row format delimited
- fields terminated by '|'
- lines terminated by '\n'
- stored as textfile
+for Struct Datatype: select  name.cname from colldata;
+for Array Datatype:  select  growth[2] from colldata;
  
- 
- 
- 
+
+                        
+                        
+                        
+                        
+                        
+                        
+                  
                    
