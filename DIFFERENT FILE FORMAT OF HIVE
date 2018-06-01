@@ -39,3 +39,7 @@ lines terminated by '\n'
 stored as PARQUETFILE;
 
 insert overwrite table parquetbasetab select * from basetab;
+
+BETTER FILE FORMAT : ORC , PARQUET
+
+
