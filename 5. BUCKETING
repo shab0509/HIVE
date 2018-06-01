@@ -57,7 +57,7 @@ If we are not satisfied with partitioning becoz of less redundancy then we go wi
   
   3. Partitioning with bucketing
   
-  create table sba (id string,rep string,sal string,area string,year int)
+  create table sbacopy (id string,rep string,sal string,area string,year int)
   row format delimited 
   fields terminated by '|'
   stored as textfile;  
@@ -71,7 +71,7 @@ If we are not satisfied with partitioning becoz of less redundancy then we go wi
  fields terminated by '|'
  stored as textfile;
   
- insert overwrite table partbucket partition(area) select id, rep, sal, year,area from sba;
+ insert overwrite table partbucket partition(area) select id, rep, sal, year,area from sbacopy;
   
   
   --------------------------------------------------------------------------------------------------------------------------
