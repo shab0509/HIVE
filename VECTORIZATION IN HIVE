@@ -1,0 +1,8 @@
+Vectorization is one of the performance enhancer in hive.
+Gnerally hive fetch one record at a time in the normal query processing ,however if we are making use of vectorization,
+hive will fetch 1024B at a time while querying the table.
+
+set hive.vectorized.execution.enabled = true;  [To Enable Vectorization]
+set hive.vectorized.execution.enabled = false; [To Disable Vectorization]
+
+set hive.vectorized.execution.reduce.enabled=true [check for what it s used]
