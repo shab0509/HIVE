@@ -1,0 +1,13 @@
+Hive is one of the component of hadoop buit on top of HDFS & is a data-warehouse 
+kind of system in hadoop.Hive is mainly used for data summarization,querying of the data & for advanced querying.
+
+Hive is exclusively meant for the processing of the data by the means of query meachanism of the data
+managed as a part of the tabular format.Even though hive is managing the 
+data in tabular format,the actual data is going to be stored on HDFS and processing of the data through querying is happening 
+through MR in the backend.
+
+As hive is not bundled in the default initialization of hadoop so we have to exclusively install hive on top of hadoop boxes.
+Even though we are using SQL kind of queries as part of hive processing every hive query will be converted into corresponding MR job
+i.e we can call hive processing as batch processing.
+
+
