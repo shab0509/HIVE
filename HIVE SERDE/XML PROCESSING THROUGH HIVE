@@ -1,1 +1,48 @@
-SACAS
+hive> use gopal;
+OK
+Time taken: 0.026 seconds
+
+hive> add jar /home/gopalkrishna/Downloads/hivexmlserde-1.0.5.3.jar;
+Added [/home/gopalkrishna/Downloads/hivexmlserde-1.0.5.3.jar] to class pathAdded resources: [/home/gopalkrishna/Downloads/hivexmlserde-1.0.5.3.jar]
+
+hive> CREATE EXTERNAL TABLE xml (name string, price string, author string, copies string)
+    >  ROW FORMAT SERDE 'com.ibm.spss.hive.serde2.xml.XmlSerDe'
+    >  WITH SERDEPROPERTIES ("column.xpath.name"="/book/name/text()",
+    >  "column.xpath.price"="/book/price/text()",
+    >  "column.xpath.author"="/book/author/text()",
+    >  "column.xpath.copies"="/book/copies/text()")
+    >  STORED AS INPUTFORMAT 'com.ibm.spss.hive.serde2.xml.XmlInputFormat'
+    >  OUTPUTFORMAT 'org.apache.hadoop.hive.ql.io.IgnoreKeyTextOutputFormat'
+    >  LOCATION '/technologyxmldata/'
+    >  TBLPROPERTIES ("xmlinput.start"="<book","xmlinput.end"="</book>");
+OK
+Time taken: 0.453 seconds
+
+hive> select * from xml;
+OK
+Hadoop In Action	$44.95	Chuck_Lam	1500
+A Press- Pro Hadoop	$29.99	Venner-Jason	7600
+Hadoop Definitive Guide	$65.75	Tom_White	9500
+Spark In Action	$49.99	Peter	400
+Scala In Action	$44.99	Nilanjan_Raychaudhuri	700
+Time taken: 1.748 seconds, Fetched: 5 row(s)
+
+hive>
+hive> SET hive.cli.print.header=true;
+hive> select * from xml WHERE copies > 2500;
+OK
+xml.name	xml.price	xml.author	xml.copies
+A Press- Pro Hadoop	$29.99	Venner-Jason	7600
+Hadoop Definitive Guide	$65.75	Tom_White	9500
+Time taken: 0.265 seconds, Fetched: 2 row(s)
+
+hive>
+
+hive> select name,price from xml where author like '%T%' OR author like '%P%'; 
+OK
+name	price
+Hadoop Definitive Guide	$65.75
+Spark In Action	$49.99
+Time taken: 0.221 seconds, Fetched: 2 row(s)
+
+hive>
