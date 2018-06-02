@@ -1,0 +1,47 @@
+Inorder to avoid the header & footer in hive in any data, we will use the following properties:
+
+tblproperties("skip.header.line.count"="1");
+tblproperties("skip.footer.line.count"="1");
+
+
+Advantages of using Map-side join:
+
+	Reducing the cost/expenses that we use for sorting and merging in the shuffle and reduce stages.
+	Optimizes the performance of the task i.e. by decreasing the time to finish the task.
+
+Disadvantages of Map-side join:
+
+Map side joins will be suitable only when one of the tables on which you perform map-side join operation 
+should be small enough to fit into memory. That means it is not suitable solution for the tables which are having huge amount of data.
+
+---------------- Map side joins will be enabledin two ways;
+1.By Specifying the keyword , /*+MAPJOIN(b)*/ in the join statement 
+2. By setting the following properrties :
+    set hive.auto.convert.join= true;
+
+------------CREATING emp TABLE & LOADING DATA INTO emp
+create table emp(id string,name string,c_code string)
+row format delimited 
+fields terminated by ',' 
+tblproperties("skip.header.line.count"="1");
+
+load data local inpath '/home/gopalkrishna/Desktop/hive/hivejoin/emp' into table emp;
+
+------------CREATING country TABLE & LOADING DATA INTO country
+create table country(c_code string,cname string)
+row format delimited
+fields terminated by ',' 
+tblproperties("skip.header.line.count"="1");
+
+load data local inpath '/home/gopalkrishna/Desktop/hive/hivejoin/countryinput' into table country;
+
+---------------------------------
+set hive.auto.convert.join=false;
+select emp.name,country.cname from emp join country on employee.c_code=country.c_code;
+
+hive.auto.convert.join property is set to true, so the query whatever we executes it will automatically performs Map joins
+
+set hive.auto.convert.join=true;
+select emp.name,country.cname from emp join country on emp.c_code=country.c_code;
+
+select /*+ MAPJOIN(country) */ emp.name,country.cname from emp join country on emp.c_code=country.c_code;
