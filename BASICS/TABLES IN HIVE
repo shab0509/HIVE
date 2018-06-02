@@ -29,10 +29,24 @@ Managed Table: Actually this are the default table of hive whose data will be ma
                           stored as <file format>;      [location : some HDFS path]
                           
                           loading of data will be same as managed table.
-                    
+                   
+
+When a managed table is dropped off :
+> metadata will be lost from metastore.
+> tabular data from HDFS will be lost. 
                         
-                        
-                        
+When a external table is dropped off :
+> metadata will be lost from metastore.
+> However tabular data from external HDFS will not be lost it will be persistent.
+
+
+
+
+
+
+
+
+                                                
                         
                         
                         
