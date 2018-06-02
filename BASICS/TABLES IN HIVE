@@ -1,0 +1,40 @@
+Basically two type of table in Hive :
+1. Managed Table 
+2. External Table
+
+Managed Table: Actually this are the default table of hive whose data will be managed by the hive warehouse system istelf,
+               i.e without mentioning the location to stored on HDFS ,manage tabular data will by default get stored\
+               in the default path of hive location.
+               
+               location : /user/hive/warehouse/<<dbname>>.db/<<tablename>> /<<data>>
+               
+               Syntax : create table <tablename> (Schema definition)
+                        row format delimited
+                        fields terminated by '<delimiter>'
+                        lines terminated by '<delimiter>'
+                        stored as <file format>;
+               
+               Two ways of Loading data in managed table :
+                  
+                        1. LOCAL MODE : load data local inpath '<local path>'  into table <tablename>
+                        2. HDFS MODE  : load data inpath '<HDFS path>' into table <tablename>
+                        
+ External Table: As the name implies, these table are external to the hive warehouse path i.e external datapath will generally 
+                 be stored in an external path of the hdfs other than hive dataware house path.
+                        
+                 Syntax : create external table <tablename> (Schema definition)
+                          row format delimited
+                          fields terminated by '<delimiter>'
+                          lines terminated by '<delimiter>'
+                          stored as <file format>;      [location : some HDFS path]
+                          
+                          loading of data will be same as managed table.
+                    
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
