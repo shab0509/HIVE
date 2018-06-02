@@ -1,3 +1,6 @@
+
+JAR file to be added in the lin file of hive directory : mysql-connector-java- 5.1.38. jar
+
 METASTORE : It is the internal database of hive which is responsible for managing the metadata information in the hive table.
             i.e table name, column info, schema details, partition keys(if any), etc
             
@@ -17,6 +20,17 @@ below are the properties we nee dto add in the hive component
 2. Connection URL Details
 3. Username Details
 4. Password
+
+Problem  with derby embedded metastore:
+
+It is a single user metastore i.e if one user is already using hive & another user trying to access we will get 
+the following error.
+"Another instance of derby may have already booted to database /home/gopalkrishna/PRAC/Hive/Metastroe_db"
+
+
+
+
+
 
 
 
