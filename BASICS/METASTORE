@@ -1,5 +1,5 @@
 
-JAR file to be added in the lin file of hive directory : mysql-connector-java- 5.1.38. jar
+JAR file to be added in the lib file of hive directory : mysql-connector-java- 5.1.38. jar
 
 METASTORE : It is the internal database of hive which is responsible for managing the metadata information in the hive table.
             i.e table name, column info, schema details, partition keys(if any), etc
