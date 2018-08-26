@@ -2,8 +2,14 @@ create database  <DB name>;
 [For creating DB in the hive meatstore]
 
 Show databases;                               
- [For displaying the database]
+[For displaying the database]
  
+Show table;                               
+[For displaying the table]
+
+use <DB name>
+[For using any particular DB]
+
 drop database if exists hivedb;               
 [For deleting the database]
 
