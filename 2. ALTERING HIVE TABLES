@@ -10,9 +10,10 @@ Replace Column: ALTER TABLE name REPLACE COLUMNS (col_spec[, col_spec ...])
                 alter table mantab replace column ()  
 
 Add column :alter table <tablename> add columns(<columnname> <datatype>, <columnname> <datatype>,........... );
-            alter table mantab add columns(subarea string);
+            alter table <table name> add columns(subarea string);
 
-Drop column : ALTER TABLE name DROP [COLUMN] column_name; [not supported in current version of hive]
+Drop column : ALTER TABLE <table name> DROP [COLUMN] column_name; 
+                [not supported in current version of hive]
 
 
 
