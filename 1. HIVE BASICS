@@ -52,7 +52,7 @@ create external table mantab1(id int, name string, sal int, loc string)
     > fields terminated by '|'
     > lines terminated by '\n'
     > stored as textfile location '<file path>';
-[For creating external table in hive and file will be stored in  defined filepath/location]
+[For creating external table in hive and file will be stored in defined filepath/location]
 
 HOW TO KNOW THE INFORMATION ABOUT TABLES [ DESCRIBE ]-----------------------------------------------
 
