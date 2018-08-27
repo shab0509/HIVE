@@ -22,7 +22,8 @@ set hive.cli.print.header=true;
 set hive.cli.print.current.db=true;           
 [For displaying the current database in the terminal]
 
-HOW TO CREATE INTERNALTABLE IN HIVE--------------------------------
+HOW TO CREATE INTERNAL TABLE IN HIVE--------------------------------
+
 create table if not exists mantab(id int, name string, sal int , loc string)
              > row format delimited
              > fields terminated by '|'
@@ -43,15 +44,15 @@ create external table if not exists mantab(id int, name string, sal int , loc st
              > row format delimited
              > fields terminated by '|'
              > lines terminated by '\n'
-             > stored as textfile;
-[For creating the table in the database]
+             > stored as textfile ;
+[For creating external table in hive and by default file will be stored in hive/warehouse path]
 
 create external table mantab1(id int, name string, sal int, loc string)
     > row format delimited
     > fields terminated by '|'
     > lines terminated by '\n'
-    > stored as textfile;
-[For creating the table in the database]
+    > stored as textfile location '<file path>';
+[For creating external table in hive and file will be stored in  defined filepath/location]
 
 HOW TO KNOW THE INFORMATION ABOUT TABLES [ DESCRIBE ]-----------------------------------------------
 
@@ -60,12 +61,12 @@ Describe extended mantab;
 Describe formatted mantab;
  
 
-HOW TO LOAD THE DATA INTO HIVE TABLES – IN LOCAL MODE------------------------------------------------------------
+HOW TO LOAD THE DATA INTO HIVE TABLES – FROM LOCAL MODE------------------------------------------------------------
 load data local inpath '/home/gopalkrishna/Desktop/hive/input/empdata.log' into table mantab;
 
-HOW TO LOAD THE DATA INTO HIVE TABLES – IN HDFS MODE------------------------------------------------------------
-load data inpath '/home/gopalkrishna/Desktop/hive/input/empdata.log' into table mantab;
-[to load the data from the HDFS]
+HOW TO LOAD THE DATA INTO HIVE TABLES – FROM HDFS MODE------------------------------------------------------------
+load data inpath '/hive/empdata.log' into table mantab;
+ 
 
 
 
