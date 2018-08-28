@@ -6,11 +6,14 @@ Rename: alter table <tablename> rename to <newtablename>;
 Change Columnname: alter table <tablename> change <columnname> <newcolumnname> <datatype>
         alter table mantab change loc area string; 
 
+Add column :alter table <tablename> add columns(<columnname> <datatype>, <columnname> <datatype>,........... );
+            alter table <table name> add columns(subarea string);
+------------------------------------------------------------------------------------------------------------------------------
+
 Replace Column: ALTER TABLE name REPLACE COLUMNS (col_spec[, col_spec ...])
                 alter table mantab replace column ()  
 
-Add column :alter table <tablename> add columns(<columnname> <datatype>, <columnname> <datatype>,........... );
-            alter table <table name> add columns(subarea string);
+
 
 Drop column : ALTER TABLE <table name> DROP [COLUMN] column_name; 
                 [not supported in current version of hive]
