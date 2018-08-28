@@ -42,7 +42,9 @@ mode:  strict for static partition
        non-strict for dynamic partition
 
 set hive.exec.dynamic.partition=nonstrict;
-
+NOTE: It is NOT recommended to load the data into a Dynamic Partitioned Table Using Files ...
+      instead Load the data from a Different Table only.
+      
 1.
 create table emp (id int,name string,sal int,loc string)
 ROW FORMAT DELIMITED
@@ -98,3 +100,12 @@ LINES TERMINATED BY '\n'
 STORED AS TEXTFILE;
 
 insert overwrite table sba3 partition (area) select id,rep,sal,area,year from sba;
+
+ALTER PARTITION 
+--------------------------------------------------
+
+alter table sbapartitab DROP IF EXISTS PARTITION(country = 'USA',year = 2017);
+
+alter table sbapartitab ADD IF NOT EXISTS PARTITION(country = 'USA' , year = 2017);
+
+
