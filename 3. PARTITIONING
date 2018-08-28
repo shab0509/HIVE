@@ -1,6 +1,7 @@
 
 ----------TO CHECK PARTITION
-              show partitions <tablename>
+          > show partitions <tablename>
+
 
 Static partition--------------------------------------------------------------------------------------------------------------------
 
@@ -12,10 +13,11 @@ FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n'
 STORED AS TEXTFILE;
 
-load data local inpath '/home/gopalkrishna/Desktop/hive/input/temp.log' into table emp partition (loc= 'Hyderabad');
-load data local inpath '/home/gopalkrishna/Desktop/hive/input/temp.log' into table emp partition (loc= 'Pune');
-load data local inpath '/home/gopalkrishna/Desktop/hive/input/temp.log' into table emp partition (loc= 'Bangalore');
-load data local inpath '/home/gopalkrishna/Desktop/hive/input/temp.log' into table emp partition (loc= 'Mumbai');
+load data local inpath '/home/gopalkrishna/Desktop/hive/input/sba/SBA_ML_Data.log' into table sba partition(area='MALAWI');
+load data local inpath '/home/gopalkrishna/Desktop/hive/input/sba/SBA_NG_Data.log' into table sba partition(area='NIGERIA');
+load data local inpath '/home/gopalkrishna/Desktop/hive/input/sba/SBA_NM_Data.log' into table sba partition(area='NAMEBIA');
+load data local inpath '/home/gopalkrishna/Desktop/hive/input/sba/SBA_TZ_Data.log' into table sba partition(area='TANZANIA');
+load data local inpath '/home/gopalkrishna/Desktop/hive/input/sba/SBA_UG_Data.log' into table sba partition(area='UGANDA');
 
 Manually we need to distribute the data based on any column then we need to manually laod the data as above command.
 
@@ -39,7 +41,7 @@ set hive.exec.dynamic.partition.mode=nonstrict;  (if u want to load from dynamic
 mode:  strict for static partition
        non-strict for dynamic partition
 
-set hive.exec.dynamic.partition=true;
+set hive.exec.dynamic.partition=nonstrict;
 
 1.
 create table emp (id int,name string,sal int,loc string)
@@ -49,6 +51,7 @@ LINES TERMINATED BY '\n'
 STORED AS TEXTFILE;
 
 load data local inpath '/home/gopalkrishna/Desktop/hive/input/empdetails.log' into table emp;
+
 
 create table dynemp (id int,name string,sal int ) partitioned by (loc string)
 ROW FORMAT DELIMITED
@@ -76,7 +79,7 @@ FIELDS TERMINATED BY '|'
 LINES TERMINATED BY '\n'
 STORED AS TEXTFILE;
 
-insert overwrite table sba1 partition (area) select * from dynsba1;
+insert overwrite table sba1 partition (area) select * from sba;
 
 create table sba2(id string,reptype string,sal string,year int )
 partitioned by (area string)
@@ -85,13 +88,13 @@ FIELDS TERMINATED BY '|'
 LINES TERMINATED BY '\n'
 STORED AS TEXTFILE;
 
-insert overwrite table sba2 partition (area) select id,reptype,sal,year,area from dynsba1;
+insert overwrite table sba2 partition (area) select id,reptype,sal,year,area from sba;
 
-create table sba21(id string,reptype string,sal string,year int)
+create table sba3(id string,reptype string,sal string,year int)
 partitioned by (year string)
 ROW FORMAT DELIMITED
 FIELDS TERMINATED BY '|'
 LINES TERMINATED BY '\n'
 STORED AS TEXTFILE;
 
-insert overwrite table  sba21 partition (area) select id,rep,sal,area,year from sba2;
+insert overwrite table sba3 partition (area) select id,rep,sal,area,year from sba;
