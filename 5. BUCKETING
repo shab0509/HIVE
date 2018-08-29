@@ -1,8 +1,8 @@
 It is one of the performance optimization technique along with partition.
 Bucketing is used for "table sampling" purpose. [table sampling: selecting the range of data from the particular file]
-As part of bucketing we are making use of cluster by class & internally using hashing algorithm to divide the data into 
+As part of bucketing we are making use of cluster by clause & internally using hashing algorithm to divide the data into 
 key value pairs where 
-                  Key :Bucket Number 
+                  Key   : Bucket Number 
                   Value : Corresponding Data in each bucket.
                   
 If we are not satisfied with partitioning becoz of less redundancy then we go with bucketing.
@@ -13,7 +13,7 @@ If we are not satisfied with partitioning becoz of less redundancy then we go wi
  Bucketing    : Follows Fixed Schema    | user have no control
  
  --------------- set hive.enforce.bucketing=true; [By default the above parameter value is false , set it to true for bucketing]
-   
+                 set hive.exec.dynamic.partition.mode=nonstrict;[for partitioning]
                   
   1. Bucketing based on integer value [If bucketing is done on integer then hashing will be normal]
   Table name : B1
@@ -33,9 +33,10 @@ If we are not satisfied with partitioning becoz of less redundancy then we go wi
   
   insert overwrite table B2 select * from B1;
   
-  2. Bucketing based on charecter value [If bucketing is done on string then hashing will be like "it will take the ASCII value of all the charecter and add it up
-     & apply mod  function on it"]
-     Table name : B1
+  2. Bucketing based on charecter value [If bucketing is done on string then hashing will be like 
+     "it will take the ASCII value of all the charecter and add it up& apply mod function on it"]
+     
+  Table name : B1
   
   create table B1 (id string,rep string,sal string,area string,year int)
   row format delimited 
@@ -62,7 +63,7 @@ If we are not satisfied with partitioning becoz of less redundancy then we go wi
   fields terminated by '|'
   stored as textfile;  
   
-  load data local inpath '/home/gopalkrishna/Desktop/hive/input/sba/sbacomplete.log' into table partbucket;
+  load data local inpath '/home/gopalkrishna/Desktop/hive/input/sba/sbacomplete.log' into table sbacopy;
   
  create table partbucket(id string, rep string, sal string,year int)
  partitioned by (area string)
@@ -74,11 +75,12 @@ If we are not satisfied with partitioning becoz of less redundancy then we go wi
  insert overwrite table partbucket partition(area) select id, rep, sal, year,area from sbacopy;
   
   
-  --------------------------------------------------------------------------------------------------------------------------
-  create table sbacopy (id string,rep string,sal string,area string,year int)
-  row format delimited 
-  fields terminated by '|'
-  stored as textfile;  
+ --------------------------------------------------------------------------------------------------------------------------
+ 
+ create table sbacopy (id string,rep string,sal string,area string,year int)
+ row format delimited 
+ fields terminated by '|'
+ stored as textfile;  
    
  create table partbucket11(id string, rep string, sal string,year int)
  partitioned by (area string)
