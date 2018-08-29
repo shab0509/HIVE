@@ -45,3 +45,13 @@ SELECT Dept,count(*) FROM employee Distribute BY DEPT sort by Bankid ;[both grou
 Cluster By:
 
 Cluster By is a short-cut for both Distribute By and Sort By.
+    It ensures sorting orders of values present in multiple reducers 
+
+For example, Cluster By clause mentioned on the Id column name of the table employees_guru table. 
+             The output when executing this query will give results to multiple reducers at the back end. 
+             But as front end it is an alternative clause for both Sort By and Distribute By.
+
+This is actually back end process when we perform a query with sort by,
+group by, and cluster by in terms of Map reduce framework.
+So if we want to store results into multiple reducers, we go with Cluster By.
+
