@@ -4,3 +4,13 @@ DEFAULT FIELD SEPRATOR OF HIVE  :  ^A or '\001'
 DEFAULT LINE/RECORD SEPRATOR OF HIVE : '\n'
 
 DEFAULT FILE FORMAT OF HIVE : textfile
+
+FOR ENABLING COLUMN HEADER : set hive.cli.print.header=true;
+FOR DISPLAYING HEADER NAME : set hive.cli.print.current.db=true;
+
+FOR ENABLING PARTITION : set hive.exec.dynamic.partition.mode=nonstrict; <otherwise strict>
+FOR ENABLING BUCKETING : set hive.enforce.bucketing=true;
+
+
+
+
