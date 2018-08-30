@@ -1,4 +1,5 @@
-DATE FUNCTION IN HIVE 
+DATE FUNCTION IN HIVE
+-------------------------------------------------------------------------------------------
 
   create table datetab(empid int , ename string, jdate date ,rdate date)
   row format delimited 
@@ -14,6 +15,7 @@ select * from datetab1;
 
 
 SWITCH CASE
+----------------------------------------------------------------------------------------------
 
 syntax: when <<CONDITION>>
         then <<STATEMENT>>;
@@ -24,17 +26,10 @@ fields terminated by '\t'
 lines terminated by '\n'
 stored as textfile
 as select empid, ename, jdate, rdate, years, 
-
-case when years>0 and years<=4
-then 'eligible for 80% gratuity'
-
- when years>4 and years<=6
-then 'eligible for 90% gratuity'
-
- when years>6 and years<=9
-then 'eligible for 100% gratuity'
-else 'not eligible'
-
+case when years>0 and years<=4 then 'eligible for 80% gratuity'
+     when years>4 and years<=6 then 'eligible for 90% gratuity'
+     when years>6 and years<=9 then 'eligible for 100% gratuity'
+     else 'not eligible'
 end as gratuity
 from datetab1;
 
