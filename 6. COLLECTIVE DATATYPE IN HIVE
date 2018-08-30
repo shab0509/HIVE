@@ -22,7 +22,7 @@ map    : for yes/no
                         
 
 for Struct Datatype: select  name.cname from colldata;
-for Array Datatype :  select  growth[2] from colldata;
+for Array Datatype : select  growth[2] from colldata;
 for map Datatype   : 
 
                         
