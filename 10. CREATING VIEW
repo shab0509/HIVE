@@ -1,0 +1,101 @@
+HOW TO CREATE A VIEW
+---------------------------------------------------------
+hive> select * from empnew;
+ 
+100	Avinash	31	Male	HYD
+101	Ramya	23	Female	BAN
+102	Mohan	32	Male	CHN
+103	Mahi	29	Male	PUNE
+104	Aadhya	31	Female	MUM
+105	Raj	30	Male	HYD
+106	Raja	39	Male	BAN
+107	Sruthi	33	Female	TVM
+108	Soumya	28	Female	BAN
+109	Sri	27	Male	HYD
+110	Roja	32	Female	HYD
+Time taken: 0.142 seconds, Fetched: 11 row(s)
+
+hive> create view empview AS
+    > select * from empnew
+    > where loc = 'HYD';
+
+hive> describe formatted empview;
+NOTE: There is NO PHYSICAL Existance for Virtual Views in Hive
+hive> select * from empview;
+OK
+100	Avinash	31	Male	HYD
+105	Raj	30	Male	HYD
+109	Sri	27	Male	HYD
+110	Roja	32	Female	HYD
+Time taken: 0.179 seconds, Fetched: 4 row(s)
+hive>
+
+HOW TO DROP A VIEW
+---------------------------------------------------------
+SYNTAX:     DROP VIEW <<viewName>>
+
+hive> DROP VIEW empview;
+
+CREATING INDEXES ON HIVE TABLES
+---------------------------------------------------------
+hive> CREATE INDEX ageindex ON TABLE empnew(age)
+    > AS 'COMPACT' WITH DEFERRED REBUILD;
+OK
+Time taken: 0.47 seconds
+
+NOTE: the keywords WITH DEFERRED REBUILD instructs Hive to first create an empty index; Step (B) is where you actually build the index with the ALTER INDEX … REBUILD command. Deferred index builds can be very useful in workflows where one process creates the tables and indexes, another loads the data and builds the indexes and a final process performs data analysis
+
+hive> show indexes on empnew;
+
+NESTED QUERIES IN HIVE
+---------------------------------------------------------
+hive> create table casetab(id int,name string,sal int,address string)
+    > row format delimited
+    > fields terminated by '\t'
+    > lines terminated by '\n'
+    > stored as textfile;
+OK
+Time taken: 1.445 seconds
+hive> LOAD DATA LOCAL INPATH '/home/gopalkrishna/PRAC/HIVE/caseData.log' INTO TABLE casetab;
+Loading data to table default.casetab
+Table default.casetab stats: [numFiles=1, totalSize=266]
+OK
+Time taken: 0.653 seconds
+hive> SELECT * FROM casetab;
+OK
+100	Rama	12000	Hyd
+101	Raja	14000	Ban
+102	Ravi	16000	Chn
+103	Raju	18000	Hyd
+104	Rani	20000	Chn
+105	Koti	22000	Mum
+106	Ambu	24000	Mum
+107	Tanu	26000	Hyd
+108	Mano	28000	Ban
+109	Janu	32000	Chn
+110	Saki	34000	Ban
+111	Raki	36000	Ban
+112	Navi	38000	Mum
+113	Dani	45000	Hyd
+Time taken: 0.475 seconds, Fetched: 14 row(s)
+hive> 
+
+
+NESTED HIVE QUERY
+---------------------------------------------------------
+hive> FROM (
+    >     SELECT upper(name) AS newname ,round(sal + 2000) AS IncrSalary
+    >     FROM casetab) c
+    >     SELECT c.newname , c.incrsalary WHERE incrsalary > 18000;
+
+RAJU	20000
+RANI	22000
+KOTI	24000
+AMBU	26000
+TANU	28000
+MANO	30000
+JANU	34000
+SAKI	36000
+RAKI	38000
+NAVI	40000
+DANI	47000
