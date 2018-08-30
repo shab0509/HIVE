@@ -1,4 +1,5 @@
------ Create Table as Select 
+Create Table as Select 
+-----------------------------------------------------------------
 
 create table ctas (degree string, branch string, lang string, result string)
 row format delimited 
