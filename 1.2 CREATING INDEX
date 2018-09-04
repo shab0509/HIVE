@@ -1,0 +1,29 @@
+ The goal of Hive indexing is to improve the speed of query lookup on certain columns of a table. 
+ Without an index, queries with predicates like 'WHERE tab1.col1 = 10' load the entire table or partition and process all the rows. 
+ But if an index exists for col1, then only a portion of the file needs to be loaded and processed.
+
+The improvement in query speed that an index can provide comes at the cost of additional processing to create the index and
+disk space to store the index.
+
+Versions
+-------------------------------------------------------------------------------------
+Hive indexing was added in version 0.7.0, and bitmap indexing was added in version 0.8.0.
+
+Compact indexing stores the pair of indexed column’s value and its blockid.
+Bitmap indexing stores the combination of indexed column value and list of rows as a bitmap.
+
+CREATING INDEXES ON HIVE TABLES
+---------------------------------------------------------
+hive> CREATE INDEX ageindex ON TABLE empnew(age)
+    > AS 'COMPACT' WITH DEFERRED REBUILD;
+OK
+Time taken: 0.47 seconds
+
+NOTE: the keywords WITH DEFERRED REBUILD instructs Hive to first create an empty index; 
+Step (B) is where you actually build the index with the ALTER INDEX … REBUILD command. 
+Deferred index builds can be very useful in workflows where one process creates the tables and indexes, 
+another loads the data and builds the indexes and a final process performs data analysis
+
+SHOW INDEXES ONHIVE TABLES
+----------------------------------------------------------
+hive> show indexes on empnew;
