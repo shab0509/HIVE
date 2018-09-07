@@ -15,4 +15,4 @@ FOR ENABLING BUCKETING : set hive.enforce.bucketing=true;
 hive> ALTER TABLE gopaltab1 SET TBLPROPERTIES('EXTERNAL'='TRUE'); 
 NOTE: 'EXTERNAL'='TRUE'   should be in Capital Letters other command will not work.
 
-
+FOE ENABLING MAPJOIN: set hive.auto.convert.join=false;
