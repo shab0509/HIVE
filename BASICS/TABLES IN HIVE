@@ -26,7 +26,8 @@ Managed Table: Actually this are the default table of hive whose data will be ma
                           row format delimited
                           fields terminated by '<delimiter>'
                           lines terminated by '<delimiter>'
-                          stored as <file format>;      [location : some HDFS path]
+                          stored as <file format>;    
+                          LOCATION ON < --------- >                    [location : some HDFS path]
                           
                           loading of data will be same as managed table.
                    
