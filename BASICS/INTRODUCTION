@@ -1,7 +1,7 @@
 INTRODUCTION
 ---------------------------------------------------------
 
-Hive is one of the component of hadoop buit on top of HDFS & is a data-warehouse kind of system in hadoop.
+Hive is one of the component of hadoop built on top of HDFS & is a data-warehouse kind of system in hadoop.
 Hive is mainly used for data summarization,querying of the data & for advanced querying.
 
 Hive is exclusively meant for the processing of the data by the means of query meachanism of the data managed as a part of the
