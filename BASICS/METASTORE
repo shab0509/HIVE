@@ -5,7 +5,7 @@ METASTORE : It is the internal database of hive which is responsible for managin
             i.e table name, column info, schema details, partition keys(if any), etc
             
             By default hive will come up with a derby database "Derby Database" as its embedded metastore , however we can also configure 
-            some other external database like mysql , ORACLE, SQLSERVER , DB2, etc as our hive database. 
+            some other external database like mysql ,ORACLE ,SQLSERVER ,DB2, etc as our hive database. 
    
 Configure metastore in hive:
 
