@@ -4,16 +4,16 @@ create database  <DB name>;
 Show databases;                               
 [For displaying the database]
  
-Show table;                               
+Show tables;                               
 [For displaying the table]
 
 use <DB name>
 [For using any particular DB]
 
-drop database if exists hivedb;               
+drop database if exists <DB name>;               
 [For deleting the database]
 
-drop database if exists hivedb cascade;       
+drop database if exists <DB name> cascade;       
 [Remove all tables before database gets deleted.]
 
 set hive.cli.print.header=true;           
