@@ -3,7 +3,7 @@
  But if an index exists for col1, then only a portion of the file needs to be loaded and processed.
 
 The improvement in query speed that an index can provide comes at the cost of additional processing to create the index and
-disk space to store the index.
+disk space to store the index.(index data stored in another table)
 
 Versions
 -------------------------------------------------------------------------------------
@@ -24,6 +24,14 @@ Step (B) is where you actually build the index with the ALTER INDEX … REBUILD 
 Deferred index builds can be very useful in workflows where one process creates the tables and indexes, 
 another loads the data and builds the indexes and a final process performs data analysis
 
-SHOW INDEXES ONHIVE TABLES
+SHOW INDEXES ON HIVE TABLES
 ----------------------------------------------------------
-hive> show indexes on empnew;
+hive> SHOW INDEXES on empnew;
+
+
+
+DROP INDEXES ON HIVE TABLES
+----------------------------------------------------------
+hive> DROP INDEX ageindex ON empnew;
+
+
