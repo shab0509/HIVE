@@ -65,16 +65,16 @@ Describe formatted mantab;
 
 HOW TO LOAD THE DATA INTO HIVE TABLES – FROM LOCAL MODE------------------------------------------------------------
 load data local inpath '/home/gopalkrishna/Desktop/hive/input/empdata.log' into table mantab;
+load data local inpath '/home/gopalkrishna/Desktop/hive/input/emp1' overwrite into table comp;
+INSERT OVERWRITE TABLE <tablename1> SELECT * FROM <tablename2>;
 
-load data local inpath '/home/gopalkrishna/Desktop/hive/input/emp1'
-overwrite into table comp;
+
 
 HOW TO LOAD THE DATA INTO HIVE TABLES – FROM HDFS MODE------------------------------------------------------------
+
 load data inpath '/hive/empdata.log' into table mantab;
-
-load data inpath '/HIVE/emp1'
-overwrite into table comph;
-
+load data inpath '/HIVE/emp1' overwrite into table comph;
+INSERT OVERWRITE TABLE <tablename1> SELECT * FROM <tablename2>;
 
 
 
