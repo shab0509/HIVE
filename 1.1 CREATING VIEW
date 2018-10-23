@@ -1,5 +1,6 @@
 HOW TO CREATE A VIEW
 ---------------------------------------------------------
+
 hive> select * from empnew;
  
 100	Avinash	31	Male	HYD
@@ -16,11 +17,12 @@ hive> select * from empnew;
 Time taken: 0.142 seconds, Fetched: 11 row(s)
 
 hive> create view empview AS
-    > select * from empnew
-    > where loc = 'HYD';
+      select * from empnew
+      where loc = 'HYD';
 
 hive> describe formatted empview;
 NOTE: There is NO PHYSICAL Existance for Virtual Views in Hive
+
 hive> select * from empview;
 OK
 100	Avinash	31	Male	HYD
