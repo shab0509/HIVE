@@ -35,17 +35,18 @@ ex : select area,count(*) from emp group by area;
      
 -----------------------------------------------------------------------------------------------------------------
 
-
 Distribute BY with sort by: It is a kind of group by operation but works with sort by only  .
 
 SELECT Dept,count(*) FROM employee Distribute BY DEPT;
 
 SELECT Dept,count(*) FROM employee Distribute BY DEPT sort by Bankid ;[both grouping and sorting are running on the data]
+
 --------------------------------------------------------------------------------------------------------
+
 Cluster By:
 
-Cluster By is a short-cut for both Distribute By and Sort By.
-    It ensures sorting orders of values present in multiple reducers 
+ClusterBy is a short-cut for both Distribute By and Sort By.
+It ensures sorting orders of values present in multiple reducers 
 
 For example, Cluster By clause mentioned on the Id column name of the table employees_guru table. 
              The output when executing this query will give results to multiple reducers at the back end. 
