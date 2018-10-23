@@ -18,35 +18,35 @@ drop database if exists <DB name> cascade;
  
 HOW TO CREATE INTERNAL TABLE IN HIVE--------------------------------
 
-create table if not exists mantab(id int, name string, sal int , loc string)
-             > row format delimited
-             > fields terminated by '|'
-             > lines terminated by '\n'
-             > stored as textfile;
+create table if not exists mantab(id int, name string, sal int, loc string)
+              row format delimited
+              fields terminated by '|'
+              lines terminated by '\n'
+              stored as textfile;
 [For creating the table in the database]
 
 create table mantab1(id int, name string, sal int, loc string)
-    > row format delimited
-    > fields terminated by '|'
-    > lines terminated by '\n'
-    > stored as textfile;
+              row format delimited
+              fields terminated by '|'
+              lines terminated by '\n'
+              stored as textfile;
 [For creating the table in the database]
 
 HOW TO CREATE EXTERNAL TABLE IN HIVE--------------------------------
 
 create external table if not exists mantab(id int, name string, sal int , loc string)
-             > row format delimited
-             > fields terminated by '|'
-             > lines terminated by '\n'
-             > stored as textfile ;
+              row format delimited
+              fields terminated by '|'
+              lines terminated by '\n'
+              stored as textfile ;
 [For creating external table in hive and by default file will be stored in hive/warehouse path]
 
 create external table mantab1(id int, name string, sal int, loc string)
-    > row format delimited
-    > fields terminated by '|'
-    > lines terminated by '\n'
-    > stored as textfile 
-    > LOCATION '<HDFS filepath>';
+     row format delimited
+     fields terminated by '|'
+     lines terminated by '\n'
+     stored as textfile 
+     LOCATION '<HDFS filepath>';
     
 [For creating external table in hive and file will be stored in defined LOCATION]
 
@@ -58,10 +58,10 @@ Describe formatted mantab;
  
 
 HOW TO LOAD THE DATA INTO HIVE TABLES – FROM LOCAL MODE------------------------------------------------------------
+
 load data local inpath '/home/gopalkrishna/Desktop/hive/input/empdata.log' into table mantab;
 load data local inpath '/home/gopalkrishna/Desktop/hive/input/emp1' overwrite into table comp;
 INSERT OVERWRITE TABLE <tablename1> SELECT * FROM <tablename2>;
-
 
 
 HOW TO LOAD THE DATA INTO HIVE TABLES – FROM HDFS MODE------------------------------------------------------------
