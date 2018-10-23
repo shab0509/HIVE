@@ -15,13 +15,7 @@ drop database if exists <DB name>;
 
 drop database if exists <DB name> cascade;       
 [Remove all tables before database gets deleted.]
-
-set hive.cli.print.header=true;           
-[For displaying the current database in the terminal]
-
-set hive.cli.print.current.db=true;           
-[For displaying the current database in the terminal]
-
+ 
 HOW TO CREATE INTERNAL TABLE IN HIVE--------------------------------
 
 create table if not exists mantab(id int, name string, sal int , loc string)
