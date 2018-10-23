@@ -9,7 +9,7 @@ METASTORE : It is the internal database of hive which is responsible for managin
    
 Configure metastore in hive:
 
-> Internal or local or embedded meta store (by default "derby")
+> Internal or local or embedded metastore (by default "derby")
 > External or remote meta store [MYSQL/MS-SQL/ORACLE/DERBY]
 
 metastore configuration will be a part of the 
