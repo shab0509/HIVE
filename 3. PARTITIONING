@@ -2,12 +2,11 @@
 ----------TO CHECK PARTITION
           > show partitions <tablename>
 
-
 Static partition--------------------------------------------------------------------------------------------------------------------
 
 1.
 create table emp(id int,name string,sal int)
-Partitioned by (loc string)
+Partitioned by (area string)
 ROW FORMAT DELIMITED
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n'
@@ -19,7 +18,7 @@ load data local inpath '/home/gopalkrishna/Desktop/hive/input/sba/SBA_NM_Data.lo
 load data local inpath '/home/gopalkrishna/Desktop/hive/input/sba/SBA_TZ_Data.log' into table sba partition(area='TANZANIA');
 load data local inpath '/home/gopalkrishna/Desktop/hive/input/sba/SBA_UG_Data.log' into table sba partition(area='UGANDA');
 
-Manually we need to distribute the data based on any column then we need to manually laod the data as above command.
+Manually we need to distribute the data based on any column then we need to manually load the data as above command.
 
 2. 
 create table sba(id string,reptype string,cost string,year int)
@@ -37,11 +36,14 @@ load data local inpath '/home/gopalkrishna/Desktop/hive/input/sba/SBA_UG_Data.lo
 
 Dynamic partitioning --------------------------------------------------------------------------------------------------------------- 
 
-set hive.exec.dynamic.partition.mode=nonstrict;  (if u want to load from dynamic partition we must have to enable the strict mode to nonstrict)
+set hive.exec.dynamic.partition.mode=nonstrict;  
+(if u want to load from dynamic partition we must have to enable the strict mode to nonstrict)
+
 mode:  strict for static partition
        non-strict for dynamic partition
 
-set hive.exec.dynamic.partition=nonstrict;
+set hive.exec.dynamic.partition.mode=nonstrict;
+
 NOTE: It is NOT recommended to load the data into a Dynamic Partitioned Table Using Files ...
       instead Load the data from a Different Table only.
       
@@ -54,16 +56,14 @@ STORED AS TEXTFILE;
 
 load data local inpath '/home/gopalkrishna/Desktop/hive/input/empdetails.log' into table emp;
 
-
-create table dynemp (id int,name string,sal int ) partitioned by (loc string)
+create table dynemp (id int,name string,sal int) 
+partitioned by (loc string)
 ROW FORMAT DELIMITED
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n'
 STORED AS TEXTFILE;
 
-load data local inpath '/home/gopalkrishna/Desktop/hive/input/empdetails.log' into table emp;
-
-insert overwrite table dynamicpart partition (year) select * from lop;
+insert overwrite table dynamicpart partition (loc) select * from emp;
 
 2.
 create table sba(id string,reptype string,sal string,area string,year int)
@@ -106,6 +106,6 @@ ALTER PARTITION
 
 alter table sbapartitab DROP IF EXISTS PARTITION(country = 'USA',year = 2017);
 
-alter table sbapartitab ADD IF NOT EXISTS PARTITION(country = 'USA' , year = 2017);
+alter table sbapartitab ADD IF NOT EXISTS PARTITION(country = 'USA',year = 2017);
 
 
