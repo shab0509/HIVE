@@ -32,7 +32,34 @@ case when years>0 and years<=4 then 'eligible for 80% gratuity'
      else 'not eligible'
 end as gratuity
 from datetab1;
+-----------------------------------------------------------------------------------------------
+file : a1.log
 
+btech,cse,java,pass
+btech,cse,hadoop,fail
+btech,cse,cg,detained
+btech,cse,cc,pass
+btech,it,daa,pass
+btech,it,wt,pass
+btech,it,cnn,pass
+mba,hr,hrlaw,pass
+mba,hr,hrguid,absent
+mtech,cs,java,pass
+mtech,cs,cd,pass
+mtech,cs,cp,detained
 
+> create table cc (course string,dept string,sub string,status string)
+  row format delimited 
+  fields terminated by ','
+  stored as textfile;
 
+> load data local inpath ‘< filepath of a1.log >’ into table cc;
 
+> select course,dept,
+  case
+  when status in ( 'fail','detained') then 'FAILED'
+  when status in ( 'absent') then 'absent'
+  when status in ( 'pass') then 'PASSED'
+  else 'noresult'
+  end as Final_Status
+  from cc;
