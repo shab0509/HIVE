@@ -1,0 +1,94 @@
+HIVE MAP SIDE JOINS
+---------------------
+
+Map-side Joins allows a table to get loaded into memory ensuring a very fast join operation,
+performed entirely within a mapper and that too without having to use both map and reduce phases.
+
+In case our queries frequently run with small table joins, 
+we might see a very substantial decrease in the time taken to compute the queries after usage of map-side joins
+
+
+Map Join
+---------------------
+Map-side joins can be enabled in two ways.
+
+1. By specifying the keyword, /*+ MAPJOIN(b) */ in the join statement.
+2. By setting the following property to true.
+   > set hive.auto.convert.join=true
+
+hive> SELECT /*+ MAPJOIN(childtab) */ basetab.first_name, basetab.id,childtab.id FROM basetab 
+      JOIN childtab 
+      ON 
+      basetab.first_name = childtab.first_name;
+
+NOTE: hive.mapjoin.smalltable.filesize=(default it will be 25MB)  
+      For performing Map-side joins, there should be two files one is of larger size and the other is of smaller size.
+      You can set the small file size by using the above property: 
+
+Bucket-Map join
+---------------------------------------------
+if tables being joined are bucketed on the join columns, and the number of buckets in one table is a multiple of the number of buckets
+in the other table, the buckets can be joined with each other.
+
+DATA INSERTION INTO 2 BUCKETED TABLES FROM non-bucketed tables
+hive> set hive.enforce.bucketing = true ;
+
+Here, we have two tables that are bucketed. We can now perform Bucket-map join between these two datasets.
+Here, for the first table we have created 4 buckets and for the second table we have created 8 buckets on the same column. Now, we can perform Bucket-map join on these two tables.
+
+For performing Bucket-Map join, we need to set this property in the Hive shell.
+set hive.optimize.bucketmapjoin = true
+
+hive>SELECT /*+ MAPJOIN(childtab_bucketed) */ basetab_bucketed.first_name,basetab_bucketed.id, childtab_bucketed.id FROM basetab_bucketed 
+     JOIN childtab_bucketed 
+     ON 
+     basetab_bucketed.first_name = childtab_bucketed.first_name ;
+
+Sort Merge Bucket (SMB) Map Join
+----------------------------------------------------
+
+	In SMB join in Hive, each mapper reads a bucket from the first table and the corresponding bucket from the second table 
+  and then a merge sort join is performed. 
+	Sort Merge Bucket (SMB) join in hive is mainly used as there is no limit on file or partition or table join 
+  ...but buckets on a table are fixed.
+	SMB join can best be used when the tables are large. 
+	In SMB join the columns are bucketed and sorted using the join columns.
+	All tables should have the same number of buckets in SMB join.
+
+Pre-Requisite Properties for SMB Join in Hive
+-----------------
+set hive.input.format=org.apache.hadoop.hive.ql.io.BucketizedHiveInputFormat;
+set hive.optimize.bucketmapjoin = true;
+set hive.optimize.bucketmapjoin.sortedmerge = true;
+
+To perform this join, we need to have the data in the bucketed tables sorted by the join column.
+
+hive> insert overwrite table basetab_bucketed select * from basetab sort by first_name;
+hive> insert overwrite table childtab_bucketed select * from childtab sort by first_name;
+
+let us perform the join between tables having 4 buckets and 8 buckets.
+
+hive> SELECT /*+ MAPJOIN(childtab_bucketed) */ basetab_bucketed.first_name,basetab_bucketed.id, childtab_bucketed.id FROM basetab_bucketed 
+      JOIN childtab_bucketed 
+      ON basetab_bucketed.first_name = childtab_bucketed.first_name ;
+
+Above Joining Query will take take as the number of buckets in both the tables are NOT SAME
+To perform SMB-Map join, we need to have the same number of buckets in both the tables with the bucketed column sorted.
+So Now lets create “childtab_bucketed” with only 4 buckets (earlier its having 8 buckets)
+
+hive> CREATE TABLE IF NOT EXISTS childtab_bucketed1 (id int,first_name String, last_’king) clustered by(first_name) into 4 buckets
+    > row format delimited
+    > fields terminated BY ',' ;
+OK
+Time taken: 0.245 seconds
+hive>insert overwrite table childtab_bucketed select * from childtab sort by first_name;
+
+Now, we have two tables with 4 buckets and the joined column sorted. Let us perform the join query again.
+
+hive> SELECT /*+ MAPJOIN(childtab_bucketed1) */basetab_bucketed.first_name, basetab_bucketed.id, childtab_bucketed1.id FROM basetab_bucketed
+      JOIN childtab_bucketed1 
+      ON 
+      basetab_bucketed.first_name = childtab_bucketed1.first_name ;
+
+
+
