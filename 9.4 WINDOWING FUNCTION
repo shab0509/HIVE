@@ -1,6 +1,143 @@
- LAG , READ  , RANK
- 
- 
- 
- 
-https://acadgild.com/blog/windowing-functions-in-hive
+ create table stocks (date_ String, Ticker String, Open Double, High Double, Low Double, Close Double, 
+Volume_for_the_day int) 
+row format delimited 
+fields terminated by ',';
+
+					 
+					 
+Lag
+---------------
+This function returns the values of the previous row.
+You can specify an integer offset which designates the row position else it will take the default integer offset as 1.
+
+Here is the sample function for lag:
+
+select ticker,date_,close,lag(close,1) 
+over(partition by ticker) as yesterday_price from stocks;
+
+Here using lag we can display the yesterday’s closing price of the ticker.
+Lag is to be used with over function, inside the over function you can use partition or order by classes.	   
+	   
+	   
+Lead
+---------------
+This function returns the values from the following rows. 
+You can specify an integer offset which designates the row position else it will take the default integer offset as 1.
+
+Here is the sample function for lead
+Now using the lead function, we will find that whether the following day’s closing price is higher or lesser than today’s 
+and that can be done as follows.	 
+
+select ticker,date_,close,case( lead(close,1) over(partition by ticker)-close ) >0 
+when true then "higher" 
+when false then "lesser" 
+end as Changes 
+from stocks;
+
+FIRST_VALUE
+---------------
+It returns the value of the first row from that window. 
+With the below query, you can see the first row high price of the ticker for all the days.
+
+select ticker,date_,first_value(high) over(partition by ticker) as first_high from stocks;
+
+LAST_VALUE
+---------------
+It is the reverse of FIRST_VALUE. 
+It returns the value of the last row from that window. 
+With the below query, you can see the last row high price value of the ticker for all the days.
+
+select ticker,date_,LAST_VALUE(high) over(partition by ticker) as first_high from stocks;
+
+
+---------------
+AGGREGATE FUNCTION USING OVER
+---------------
+1.Sum
+---------------
+It returns the sum of all the values for the expression written in the over clause. 
+From the below query, we can find the sum of all the closing stock prices for that particular ticker.
+
+select ticker,sum(close) over(partition by ticker) as total from stocks;
+select ticker,date_,volume_for_the_day,(volume_for_the_day*100/(sum(volume_for_the_day) over(partition by ticker))) from stocks;
+
+
+2.Min
+---------------
+It returns the minimum value of the column for the rows in that over clause. 
+From the below query, we can find the minimum closing stock price for each particular ticker.
+
+select ticker, min(close) over(partition by ticker) as minimum from stocks;
+
+3.Max
+---------------
+It returns the maximum value of the column for the rows in that over clause. 
+From the below query, we can find the maximum closing stock price for each particular ticker.
+
+select ticker, max(close) over(partition by ticker) as maximum from stocks;
+
+4.AVG
+---------------
+It returns the average value of the column for the rows that over clause returns. 
+From the below query, we can find the average closing stock price for each particular ticker.
+
+select ticker, avg(close) over(partition by ticker) as maximum from stocks;
+
+5.Count
+---------------
+It returns the count of all the values for the expression written in the over clause. 
+From the below query, we can find the number of rows present for each ticker.
+
+select ticker,count(ticker) over(partition by ticker) as cnt from stocks;
+select distinct ticker,count(ticker) over(partition by ticker) as cnt from stocks;
+
+---------------
+Analytic functions
+---------------
+
+1.RANK
+---------------
+
+The rank function will return the rank of the values as per the result set of the over clause. If two values are same then it will give the same rank to those 2 values and then for the next value, the sub-sequent rank will be skipped.
+The below query will rank the closing prices of the stock for each ticker.
+
+select ticker,close,rank() over(partition by ticker order by close) as closing from stocks;
+
+2.Row_number
+---------------
+Row number will return the continuous sequence of numbers for all the rows of the result set of the over clause.
+From the below query, you will get the ticker, closing price and its row number for each ticker.
+
+select ticker,close,row_number() over(partition by ticker order by close) as num from stocks;
+
+3.Dense_rank
+---------------
+It is same as the rank() function but the difference is if any duplicate value is present then the rank will not be skipped for the subsequent rows. Each unique value will get the ranks in a sequence.
+The below query will rank the closing prices of the stock for each ticker. The same you can see in the below screenshot.
+
+select ticker,close,dense_rank() over(partition by ticker order by close) as closing from stock;
+
+4.Cume_dist
+---------------
+It returns the cumulative distribution of a value. It results from 0 to 1. For suppose if the total number of records are 10 then for the 1st row the cume_dist will be 1/10 and for the second 2/10 and so on till 10/10.
+This cume_dist will be calculated in accordance with the result set returned by the over clause. The below query will result in the cumulative of each record for every ticker.
+
+select ticker,cume_dist() over(partition by ticker order by close) as cummulative from stock;
+
+
+5.Percent_rank
+---------------
+
+It returns the percentage rank of each row within the result set of over clause. Percent_rank is calculated in accordance with the rank of the row and the calculation is as follows (rank-1)/(total_rows_in_group – 1). If the result set has only one row then the percent_rank will be 0.
+The below query will calculate the percent_rank for every row in each partition and you can see the same in the below screen shot.
+
+select ticker,close,percent_rank() over(partition by ticker order by close) as closing from stocks;
+
+6.Ntile
+---------------
+
+It returns the bucket number of the particular value. For suppose if you say Ntile(5) then it will create 5 buckets based on the result set of the over clause after that it will place the first 20% of the records in the 1st bucket and so on till 5th bucket.
+The below query will create 5 buckets for every ticker and the first 20% records for every ticker will be in the 1st bucket and so on.
+
+select ticker,ntile(5) over(partition by ticker order by close ) as bucket from stocks;
+
