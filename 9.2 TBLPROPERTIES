@@ -1,0 +1,39 @@
+TBL PROPERTIES
+---------------------------------
+
+The TBLPROPERTIES clause allows you to tag the table definition with your own metadata key/value pairs. 
+Some predefined table properties also exist, such as last_modified_user and last_modified_time which are automatically added and
+managed by Hive. Other predefined table properties include:
+
+● If there is a header line present in your input file [once look into example file dept.txt] then specify this property while creating table with count of header lines in your input file [ header_count=1 in dept.txt]. Or if your table is already created then you can also alter your table before loading data into it.
+TBLPROPERTIES("skip.header.line.count"="no of header lines in input");
+
+● If your input file contains a footer line then use this property.
+TBLPROPERTIES("skip.footer.line.count"="no. of footer lines in input");
+
+● You can give some description to your table which eases you or new person to understand about your table.
+TBLPROPERTIES ("comment"="table_comment");
+
+
+● When you perform INSERT OVERWRITE into a table the old data will be moved to trash for some duration. To avoid data moving into trash and free up space immediately just specify auto.purge=true.
+
+TBLPROPERTIES ("auto.purge"="true") or ("auto.purge"="false")
+
+● If you want avoid inserting same record for multiple times or you dont want duplicate records then go with this option as immutable=true. Default value is false.
+TBLPROPERTIES ("immutable"="true") or ("immutable"="false");
+
+
+● ZLIB, SNAPPY are two types of compression formats in hive. Specify NONE when you don't want your file to be stored in compressed format.
+TBLPROPERTIES("orc.compress"="ZLIB") or ("orc.compress"="SNAPPY") or ("orc.compress"="NONE");
+
+● If a table is to be used in ACID writes (insert, update, delete) then the table property "transactional=true" must be set on that table. Also, "hive.txn.manager" must be set to org.apache.hadoop.hive.ql.lockmgr.DbTxnManager either in hive-site.xml or set in hive CLI in  the beginning of the session before any query is run. Changing TBLPROPERTIES ("transactional"="false") is not allowed on an ACID write allowed table.
+TBLPROPERTIES ("transactional"="true") or ("transactional"="false");
+
+
+● Set NO_AUTO_COMPACTION"="false" when you want to override the Warehouse/table settings.
+TBLPROPERTIES("NO_AUTO_COMPACTION"="true") or ("NO_AUTO_COMPACTION"="false");
+
+● When you create a HBase table which is to be managed by Hive. "hbase.table.name" property allows to controls the name of the table as known by HBase, and allows the Hive table to have a different name.
+TBLPROPERTIES ("hbase.table.name"="table_name")
+tblproperties("skip.header.line.count"="1");
+tblproperties("skip.footer.line.count"="1");
