@@ -1,9 +1,9 @@
- create table stocks (date_ String, Ticker String, Open Double, High Double, Low Double, Close Double, 
+create table stocks (date_ String, Ticker String, Open Double, High Double, Low Double, Close Double, 
 Volume_for_the_day int) 
 row format delimited 
 fields terminated by ',';
 
-					 
+load data local inpath '/home/gopalkrishna/Desktop/hive/windowing/spmohst.txt' into table stocks;				 
 					 
 Lag
 ---------------
@@ -112,14 +112,17 @@ select ticker,close,row_number() over(partition by ticker order by close) as num
 
 3.Dense_rank
 ---------------
-It is same as the rank() function but the difference is if any duplicate value is present then the rank will not be skipped for the subsequent rows. Each unique value will get the ranks in a sequence.
+It is same as the rank() function but the difference is if any duplicate value is present then the rank will not be skipped 
+for the subsequent rows. Each unique value will get the ranks in a sequence.
 The below query will rank the closing prices of the stock for each ticker. The same you can see in the below screenshot.
 
 select ticker,close,dense_rank() over(partition by ticker order by close) as closing from stock;
 
 4.Cume_dist
 ---------------
-It returns the cumulative distribution of a value. It results from 0 to 1. For suppose if the total number of records are 10 then for the 1st row the cume_dist will be 1/10 and for the second 2/10 and so on till 10/10.
+It returns the cumulative distribution of a value. 
+It results from 0 to 1. 
+For suppose if the total number of records are 10 then for the 1st row the cume_dist will be 1/10 and for the second 2/10 and so on till 10/10.
 This cume_dist will be calculated in accordance with the result set returned by the over clause. The below query will result in the cumulative of each record for every ticker.
 
 select ticker,cume_dist() over(partition by ticker order by close) as cummulative from stock;
@@ -128,7 +131,9 @@ select ticker,cume_dist() over(partition by ticker order by close) as cummulativ
 5.Percent_rank
 ---------------
 
-It returns the percentage rank of each row within the result set of over clause. Percent_rank is calculated in accordance with the rank of the row and the calculation is as follows (rank-1)/(total_rows_in_group – 1). If the result set has only one row then the percent_rank will be 0.
+It returns the percentage rank of each row within the result set of over clause. 
+Percent_rank is calculated in accordance with the rank of the row and the calculation is as follows (rank-1)/(total_rows_in_group – 1). 
+If the result set has only one row then the percent_rank will be 0.
 The below query will calculate the percent_rank for every row in each partition and you can see the same in the below screen shot.
 
 select ticker,close,percent_rank() over(partition by ticker order by close) as closing from stocks;
@@ -136,7 +141,8 @@ select ticker,close,percent_rank() over(partition by ticker order by close) as c
 6.Ntile
 ---------------
 
-It returns the bucket number of the particular value. For suppose if you say Ntile(5) then it will create 5 buckets based on the result set of the over clause after that it will place the first 20% of the records in the 1st bucket and so on till 5th bucket.
+It returns the bucket number of the particular value. For suppose if you say Ntile(5) then it will create 5 buckets based on the result
+set of the over clause after that it will place the first 20% of the records in the 1st bucket and so on till 5th bucket.
 The below query will create 5 buckets for every ticker and the first 20% records for every ticker will be in the 1st bucket and so on.
 
 select ticker,ntile(5) over(partition by ticker order by close ) as bucket from stocks;
