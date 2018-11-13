@@ -1,6 +1,6 @@
 An Index acts as a reference to the records. Instead of searching all the records, we can refer to the index to search for a
 particular record. Indexes maintain the reference of the records. So that it is easy to search for a record with minimum overhead.
-Indexes also speed up the searching of dataAn Index acts as a reference to the records. Instead of searching all the records, 
+Indexes also speed up the searching of an data Index acts as a reference to the records. Instead of searching all the records, 
 we can refer to the index to search for a particular record. Indexes maintain the reference of the records.
 So that it is easy to search for a record with minimum overhead. Indexes also speed up the searching of data
  
@@ -23,7 +23,6 @@ The improvement in query speed that an index can provide comes at the cost of ad
 disk space to store the index.(index data stored in another table)
 
 
-
 Versions
 -------------------------------------------------------------------------------------
 Hive indexing was added in version 0.7.0, and bitmap indexing was added in version 0.8.0.
@@ -41,23 +40,21 @@ Time taken: 0.47 seconds
 NOTE:
 (A) the keywords WITH DEFERRED REBUILD instructs Hive to first create an empty index; 
 Step(B) is where you actually build the index with the ALTER INDEX … REBUILD command. 
+
 Deferred index builds can be very useful in workflows where one process creates the tables and indexes, 
 another loads the data and builds the indexes and a final process performs data analysis
 
 The following are the different operations that can be performed on Hive indexes:
 
-Creating index
-Showing index
-Alter index
-Dropping index
+1.Creating index
+2.Showing index
+3.Alter index
+4.Dropping index
 
 SHOW INDEXES ON HIVE TABLES
 ----------------------------------------------------------
 hive> SHOW INDEXES on empnew;
 
-
 DROP INDEXES ON HIVE TABLES
 ----------------------------------------------------------
 hive> DROP INDEX ageindex ON empnew;
-
-
