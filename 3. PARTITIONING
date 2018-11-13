@@ -92,8 +92,8 @@ STORED AS TEXTFILE;
 
 insert overwrite table sba2 partition (area) select id,reptype,sal,year,area from sba;
 
-create table sba3(id string,reptype string,sal string,year int)
-partitioned by (year string)
+create table sba3(id string,reptype string,sal string,area string)
+partitioned by (year int)
 ROW FORMAT DELIMITED
 FIELDS TERMINATED BY '|'
 LINES TERMINATED BY '\n'
