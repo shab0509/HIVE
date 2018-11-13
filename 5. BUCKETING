@@ -88,26 +88,3 @@ If we are not satisfied with partitioning becoz of less redundancy then we go wi
  row format delimited 
  fields terminated by '|'
  stored as textfile;
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
