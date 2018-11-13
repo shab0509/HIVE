@@ -2,7 +2,7 @@
 ----------------------------------------------------------------------
 TEXTFILE format is a famous input/output format used in Hadoop. 
 In Hive if we define a table as TEXTFILE it can load data of from CSV (Comma Separated Values), 
-delimited by Tabs, Spaces, and JSON data. This means fields in each record should be separated by comma or 
+delimited by Tabs, Spaces and JSON data. This means fields in each record should be separated by comma or 
 space or tab or it may be JSON(JavaScript Object Notation) data.
 
 By default, if we use TEXTFILE format then each line is considered as a record.
