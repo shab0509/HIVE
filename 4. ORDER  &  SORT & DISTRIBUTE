@@ -1,5 +1,5 @@
-ORDER BY : Irrespective of the volume of the data ORDER BY clause will make use of single reducer 
-to sort the data.
+ORDER BY : Irrespective of the volume of the data ORDER BY clause will make use of single reducer to sort the data.
+
 select * from <tablename> order by <column name>;
 
 There are some limitations in the "order by" clause. In the strict mode (i.e., hive.mapred.mode=strict), 
@@ -34,7 +34,6 @@ ex : select area,count(*) from emp group by area;
      
      
 -----------------------------------------------------------------------------------------------------------------
-
 Distribute BY with sort by: It is a kind of group by operation but works with sort by only  .
 
 SELECT Dept,count(*) FROM employee Distribute BY DEPT;
