@@ -40,8 +40,6 @@ When a external table is dropped off :
 > metadata will be lost from metastore.
 > However tabular data from external HDFS will not be lost it will be persistent.
 
-
-
  One of the main differences between an external and a managed table in Hive is that when an external table is dropped, 
  the data associated with it  doesn't get deleted, only the metadata (number of columns, type of columns, terminators,
  etc.) gets dropped from the Hive metastore. When a managed table gets dropped, both the metadata and data get dropped.
@@ -50,13 +48,3 @@ When a external table is dropped off :
  However, most (if not all) of the changes to schema can now be made through ALTER TABLE or similar commands so my 
  recommendation/preference to use external tables over managed ones might be more of a legacy concern than a contemporary
  one.
-
-
-
-
-                                                
-                        
-                        
-                        
-                        
-                        
