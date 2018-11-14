@@ -1,3 +1,11 @@
+View can be described as virtual table which derived its data from one or more than one table columns.
+It is stored in the database. 
+View can be created using tables of same database or different database. 
+It is used to implement the security mechanism in the SQL Server.
+Views are used for security purposes because they provide encapsulation of the name of the table.
+Data is in the virtual table, not stored permanently. 
+Views display only selected data.
+
 HOW TO CREATE A VIEW
 ---------------------------------------------------------
 
