@@ -36,13 +36,12 @@ load data local inpath '/home/gopalkrishna/Desktop/hive/input/sba/SBA_UG_Data.lo
 
 Dynamic partitioning --------------------------------------------------------------------------------------------------------------- 
 
+set hive.exec.dynamic.partition=true;(for version less than 0.9)
 set hive.exec.dynamic.partition.mode=nonstrict;  
 (if u want to load from dynamic partition we must have to enable the strict mode to nonstrict)
 
 mode:  strict for static partition
        non-strict for dynamic partition
-
-set hive.exec.dynamic.partition.mode=nonstrict;
 
 NOTE: It is NOT recommended to load the data into a Dynamic Partitioned Table Using Files ...
       instead Load the data from a Different Table only.
@@ -108,4 +107,4 @@ alter table sbapartitab DROP IF EXISTS PARTITION(country = 'USA',year = 2017);
 
 alter table sbapartitab ADD IF NOT EXISTS PARTITION(country = 'USA',year = 2017);
 
-
+show partitions <tablename>;
