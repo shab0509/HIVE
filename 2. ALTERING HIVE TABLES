@@ -1,14 +1,14 @@
 Altering  Hive tables
 -----------------------------------------------------------------------------------------------
 
-Rename: alter table <tablename> rename to <newtablename>;
-        alter table mantab1 rename to tab001;
+Rename Tablename : alter table <tablename> rename to <newtablename>;
+                   alter table mantab1 rename to tab001;
 
 Change Columnname: alter table <tablename> change <columnname> <newcolumnname> <datatype>
                    alter table mantab change loc area string; 
 
-Add column :alter table <tablename> add columns(<columnname> <datatype>, <columnname> <datatype>,........... );
-            alter table <table name> add columns(subarea string);
+Add columns      : alter table <tablename> add columns(<columnname> <datatype>, <columnname> <datatype>,........... );
+                   alter table <table name> add columns(subarea string);
 
 
 ------------------------------------------------------------------------------------------------------------------------------
