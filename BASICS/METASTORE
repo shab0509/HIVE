@@ -27,20 +27,3 @@ Problem  with derby embedded metastore:
 It is a single user metastore i.e if one user is already using hive & another user trying to access we will get 
 the following error.
 "Another instance of derby may have already booted to database /home/gopalkrishna/PRAC/Hive/Metastroe_db"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
