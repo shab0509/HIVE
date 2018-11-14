@@ -1,0 +1,92 @@
+Here are few techniques that can be implemented while running your hive queries to optimize and improve its performance.
+
+Execution Engine
+Usage of suitable file format
+By partitioning
+Use of bucketing
+Use of vectorization
+Cost based optimization
+Use of indexing
+ 
+ 
+ 1.Execution engine
+
+Using your execution engine as tez will increase the performance of your hive query. 
+Tez is a new application framework built on Hadoop Yarn, which can execute complex-directed acyclic graphs of general data processing tasks.
+In many ways, it can be considered to be a much more flexible and powerful successor of the map-reduce framework.
+Tez provides developers an API framework to write native YARN applications on Hadoop that bridges the spectrum of interactive and 
+batch workloads. 
+It allows those data access applications to work with petabytes of data over thousands of nodes.
+
+2.Usage of Suitable File format
+
+Using appropriate file format based on your data will drastically increase your query performance. 
+Generally ORC file format is best suitable for increasing your query performance.  
+ORC stands for Optimized Row Columnar which means it can store data in an optimized way than the other file formats. 
+ORC reduces the size of the original data up to 75%. As a result the speed of data processing also increases. 
+ORC shows better performance than Text, Sequence and RC file formats.
+An ORC file contains rows data in groups called as Stripes along with a file footer. 
+ORC format improves the performance when Hive is processing the data.
+
+3.By partitioning
+
+Without partitioning Hive reads all the data in the directory and applies the query filters on it. 
+This is slow and expensive since all data has to be read.
+Very often users need to filter the data on specific column values. 
+To apply the partitioning in hive , users need to understand the domain of the data on which they are doing analysis.
+When to use Hive Partitioning:
+When any user wants data contained within a table to be split across multiple sections in hive table, use of partition is suggested.
+The entries for the various columns of dataset are segregated and stored in their respective partition. 
+When we write the query to fetch the values from table , only the required partitions of the table are queried,
+which reduces the time taken by query to yield the result.
+
+4.Use of bucketing
+
+We came to know that Partition helps in increasing the efficiency when performing a query on a table. 
+Instead of scanning the whole table, it will only scan for the partitioned set and does not scan or operate on the un-partitioned sets, 
+which helps us to provide results in lesser time and the details will be displayed very quickly because of Hive Partition.
+Now, let’s assume a condition that there is a huge dataset. At times, even after partitioning on a particular field or fields, 
+the partitioned file size doesn’t match with the actual expectation and remains huge and we want to manage the partition results 
+into different parts. 
+To overcome this problem of partitioning, Hive provides Bucketing concept, which allows user to divide table data sets into more manageable parts.
+Thus, Bucketing helps user to maintain parts that are more manageable and user can set the size of the manageable parts or Buckets too.
+Bucketing Features in Hive
+Hive partition divides table into number of partitions and these partitions can be further subdivided into more manageable parts known as Buckets or Clusters. The Bucketing concept is based on Hash function, which depends on the type of the bucketing column. Records which are bucketed by the same column will always be saved in the same bucket.
+Here, CLUSTERED BY clause is used to divide the table into buckets.
+
+5.Use of vectorization
+
+Vectorized query execution improves performance of operations like scans, aggregations, filters and joins, 
+by performing them in batches of 1024 rows at once instead of single row each time.
+Introduced in Hive 0.13, this feature significantly improves query execution time, and is easily enabled with two parameters settings:
+
+set hive.vectorized.execution = ture
+set hive.vectorized.execution.enabled = true
+
+6.Cost based optimization
+
+Hive optimizes each query’s logical and physical execution plan before submitting for final execution. 
+These optimizations are not based on the cost of the query – that is, until now.
+A recent addition to Hive, CBO, performs further optimizations based on query cost, resulting in potentially different decisions: 
+how to order joins, which type of join to perform, degree of parallelism and others.
+To use CBO, set the following parameters at the beginning of your query:
+
+set hive.cbo.enable=true;
+set hive.compute.query.using.stats=true;
+set hive.stats.fetch.column.stats=true;
+set hive.stats.fetch.partition.stats=true;
+
+7.Use of Indexing
+
+Indexing will definitely help to increase your query performance, use of indexing will create a separate called index table which acts 
+as a reference for the original table.
+In a Hive table, there are many numbers of rows and columns. 
+If we want to perform queries only on some columns without indexing, it will take large amount of time because queries will be 
+executed on all the columns present in the table.
+The major advantage of using indexing is; whenever we perform a query on a table that has an index, 
+there is no need for the query to scan all the rows in the table. 
+Further, it checks the index first and then goes to the particular column and performs the operation.
+So if we maintain indexes, it will be easier for Hive query to look into the indexes first and then perform the needed operations 
+within less amount of time.
+Eventually, time is the only factor that everyone focuses on.
+
