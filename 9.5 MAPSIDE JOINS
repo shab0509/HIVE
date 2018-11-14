@@ -1,14 +1,14 @@
 HIVE MAP SIDE JOINS
 ---------------------
-
-Map-side Joins allows a table to get loaded into memory ensuring a very fast join operation,
-performed entirely within a mapper and that too without having to use both map and reduce phases.
-
-In case our queries frequently run with small table joins, 
+ Map side join is a process where joins between two tables are performed in the Map phase without the involvement of Reduce phase.
+ Map-side Joins allows a table to get loaded into memory ensuring a very fast join operation, 
+ performed entirely within a mapper and that too without having to use both map and reduce phases.
+ 
+ In case our queries frequently run with small table joins, 
 we might see a very substantial decrease in the time taken to compute the queries after usage of map-side joins
 
 
-Map Join
+Map-Side Join
 ---------------------
 Map-side joins can be enabled in two ways.
 
@@ -34,7 +34,8 @@ DATA INSERTION INTO 2 BUCKETED TABLES FROM non-bucketed tables
 hive> set hive.enforce.bucketing = true ;
 
 Here, we have two tables that are bucketed. We can now perform Bucket-map join between these two datasets.
-Here, for the first table we have created 4 buckets and for the second table we have created 8 buckets on the same column. Now, we can perform Bucket-map join on these two tables.
+Here, for the first table we have created 4 buckets and for the second table we have created 8 buckets on the same column. 
+Now, we can perform Bucket-map join on these two tables.
 
 For performing Bucket-Map join, we need to set this property in the Hive shell.
 set hive.optimize.bucketmapjoin = true
