@@ -15,8 +15,8 @@ TBLPROPERTIES("skip.footer.line.count"="no. of footer lines in input");
 TBLPROPERTIES ("comment"="table_comment");
 
 
-● When you perform INSERT OVERWRITE into a table the old data will be moved to trash for some duration. To avoid data moving into trash and free up space immediately just specify auto.purge=true.
-
+● When you perform INSERT OVERWRITE into a table the old data will be moved to trash for some duration. 
+To avoid data moving into trash and free up space immediately just specify auto.purge=true.
 TBLPROPERTIES ("auto.purge"="true") or ("auto.purge"="false")
 
 ● If you want avoid inserting same record for multiple times or you dont want duplicate records then go with this option as immutable=true. Default value is false.
