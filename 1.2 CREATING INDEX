@@ -58,3 +58,12 @@ hive> SHOW INDEXES on empnew;
 DROP INDEXES ON HIVE TABLES
 ----------------------------------------------------------
 hive> DROP INDEX ageindex ON empnew;
+
+
+When not to use indexing?
+-------------------------------------------------------
+1.Indexes are advised to build on the columns on which you frequently perform operations.
+2.Building more number of indexes also degrade the performance of your query.
+3.Type of index to be created should be identified prior to its creation 
+(if your data requires bitmap you should not create compact).
+This leads to increase in time for executing your query.
