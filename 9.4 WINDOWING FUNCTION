@@ -98,7 +98,9 @@ Analytic functions
 1.RANK
 ---------------
 
-The rank function will return the rank of the values as per the result set of the over clause. If two values are same then it will give the same rank to those 2 values and then for the next value, the sub-sequent rank will be skipped.
+The rank function will return the rank of the values as per the result set of the over clause. 
+If two values are same then it will give the same rank to those 2 values and then for the next value, 
+the sub-sequent rank will be skipped.
 The below query will rank the closing prices of the stock for each ticker.
 
 select ticker,close,rank() over(partition by ticker order by close) as closing from stocks;
@@ -122,8 +124,10 @@ select ticker,close,dense_rank() over(partition by ticker order by close) as clo
 ---------------
 It returns the cumulative distribution of a value. 
 It results from 0 to 1. 
-For suppose if the total number of records are 10 then for the 1st row the cume_dist will be 1/10 and for the second 2/10 and so on till 10/10.
-This cume_dist will be calculated in accordance with the result set returned by the over clause. The below query will result in the cumulative of each record for every ticker.
+For suppose if the total number of records are 10 then for the 1st row the cume_dist will be 1/10 and for the second 2/10 
+and so on till 10/10.
+This cume_dist will be calculated in accordance with the result set returned by the over clause. 
+The below query will result in the cumulative of each record for every ticker.
 
 select ticker,cume_dist() over(partition by ticker order by close) as cummulative from stock;
 
