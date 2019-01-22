@@ -62,7 +62,7 @@ FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n'
 STORED AS TEXTFILE;
 
-insert overwrite table dynamicpart partition (loc) select * from emp;
+insert overwrite table dynemp partition (loc) select * from emp;
 
 2.
 create table sba(id string,reptype string,sal string,area string,year int)
