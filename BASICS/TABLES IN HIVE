@@ -48,3 +48,27 @@ When a external table is dropped off :
  However, most (if not all) of the changes to schema can now be made through ALTER TABLE or similar commands so my 
  recommendation/preference to use external tables over managed ones might be more of a legacy concern than a contemporary
  one.
+
+
+When to use Managed and external table
+--------------------------------------------
+
+Use Managed table when –
+
+> We want Hive to completely manage the lifecycle of the data and table.
+> Data is temporary
+
+Use External table when –
+
+> Data is used outside of Hive. 
+  For example, the data files are read and processed by an existing program that does not lock the files.
+> We are not creating a table based on the existing table.
+> We need data to remain in the underlying location even after a DROP TABLE. 
+  This may apply if we are pointing multiple schemas at a single data set.
+> The hive shouldn’t own data and control settings, directories etc., 
+  we may have another program or process that will do these things.
+
+
+
+
+
