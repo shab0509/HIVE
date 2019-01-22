@@ -2,11 +2,18 @@ INTRODUCTION
 ---------------------------------------------------------
 
 Hive is one of the component of hadoop built on top of HDFS & is a data-warehouse kind of system in hadoop.
-Hive is mainly used for data summarization,querying of the data & for advanced querying.
+Hive is mainly used for data summarization, querying of the data & for advanced querying.
 
 Hive is exclusively meant for the processing of the data by the means of query meachanism of the data managed as a part of the
-tabular format.Even though hive is managing the data in tabular format,the actual data is going to be stored on HDFS and processing 
+tabular format. Even though hive is managing the data in tabular format, the actual data is going to be stored on HDFS and processing 
 of the data through querying is happening through MR in the backend. i.e we can call hive processing as batch processing.
-i.e we can call hive processing as batch processing.
 
 As hive is not bundled in the default initialization of hadoop so we have to exclusively install hive on top of hadoop boxes.
+HiveQL is also case-insensitive (except for string comparisons) same as SQL.
+
+
+Features of Apache Hive:
+1. We can easily process structured data in Hadoop using Hive.
+2. Querying in Hive is very simple as it is similar to SQL.
+3. We can also run Ad-hoc queries for the data analysis using Hive.
+4. Hive has a rule based optimizer for optimizing logical plans.
