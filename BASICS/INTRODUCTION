@@ -11,9 +11,14 @@ of the data through querying is happening through MR in the backend. i.e we can 
 As hive is not bundled in the default initialization of hadoop so we have to exclusively install hive on top of hadoop boxes.
 HiveQL is also case-insensitive (except for string comparisons) same as SQL.
 
-
 Features of Apache Hive:
 1. We can easily process structured data in Hadoop using Hive.
 2. Querying in Hive is very simple as it is similar to SQL.
 3. We can also run Ad-hoc queries for the data analysis using Hive.
 4. Hive has a rule based optimizer for optimizing logical plans.
+
+limitations of Apache Hive:
+1. Apache does not offer real-time queries and row level updates.
+2. Hive also provides acceptable latency for interactive data browsing.
+3. It is not good for online transaction processing.
+4. Latency for Apache Hive queries is generally very high.
