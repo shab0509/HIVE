@@ -65,19 +65,10 @@ INSERT OVERWRITE TABLE <tablename1> SELECT * FROM <tablename2>;
 
 
 HOW TO LOAD THE DATA INTO HIVE TABLES – FROM HDFS MODE------------------------------------------------------------
+[ when we load the data from HDFS file will be deleted from HDFS(source) 
+  & 
+  only way to keep the source file intact is to create external table ]
 
 load data inpath '/hive/empdata.log' into table mantab;
 load data inpath '/HIVE/emp1' overwrite into table comph;
 INSERT OVERWRITE TABLE <tablename1> SELECT * FROM <tablename2>;
-
-
-
-
-
-
-
-
-
-
-
-
