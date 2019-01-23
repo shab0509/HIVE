@@ -13,4 +13,8 @@ hive> ALTER TABLE gopaltab1 SET TBLPROPERTIES('EXTERNAL'='TRUE');
 NOTE: 'EXTERNAL'='TRUE' This should be in Capital Letters otherwise command will not work.
 
 FOR ENABLING MAPJOIN                  : set hive.auto.convert.join=false;
-For Fast operation                    : set hive.exec.mode.local.auto=true;
+For Fast operation [locally]          : set hive.exec.mode.local.auto=true;
+
+
+For setting the no. of reducer        : set hive.mapred.task =5  
+
