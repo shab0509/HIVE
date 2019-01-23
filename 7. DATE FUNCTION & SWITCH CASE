@@ -1,11 +1,11 @@
 DATE FUNCTION IN HIVE
 -------------------------------------------------------------------------------------------
 
-  create table datetab(empid int , ename string, jdate date ,rdate date)
-  row format delimited 
-  fields terminated by '\t'
-  lines terminated by '\n'
-  stored as textfile
+create table datetab(empid int , ename string, jdate date ,rdate date)
+row format delimited 
+fields terminated by '\t'
+lines terminated by '\n'
+stored as textfile
 
 load data local inpath '/home/gopalkrishna/Desktop/hive/input/datedata.log' into table datetab;
 
