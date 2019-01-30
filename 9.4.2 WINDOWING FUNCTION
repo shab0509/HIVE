@@ -13,12 +13,14 @@ You can specify an integer offset which designates the row position else it will
 Here is the sample function for lag:
 
 select ticker,date_,close,lag(close,1) 
-over(partition by ticker) as yesterday_price from stocks;
+over(partition by ticker) 
+as
+yesterday_price from stocks;
 
 Here using lag we can display the yesterday’s closing price of the ticker.
 Lag is to be used with over function, inside the over function you can use partition or order by classes.	   
-	   
-	   
+
+
 Lead
 ---------------
 This function returns the values from the following rows. 
