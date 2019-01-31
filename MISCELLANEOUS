@@ -17,4 +17,24 @@ For Fast operation [locally]          : set hive.exec.mode.local.auto=true;
 
 
 For setting the no. of reducer        : set hive.mapred.task =5  
+-------------------------------------------------------------------------------------------
 
+hive.exec.dynamic.partition = false   : Set to true to enable dynamic partitioning.
+
+hive.exec.dynamic.partition.mode = strict : Set to nonstrict to enable all partitions to be determined dynamically.
+
+hive.exec.max.dynamic.partitions.pernode  
+100 
+The maximum number of dynamic partitions that can be created
+by each mapper or reducer. Raises a fatal error if one
+mapper or reducer attempts to create more than the threshold.
+
+hive.exec.max.dynamic.partitions    
+1000 
+The total number of dynamic partitions that can be created by one statement with dynamic partitioning. Raises a fatal error
+if the limit is exceeded.
+
+hive.exec.max.created.files= 100000 
+The maximum total number of files that can be created globally.
+A Hadoop counter is used to track the number of files created.
+Raises a fatal error if the limit is exceeded.
