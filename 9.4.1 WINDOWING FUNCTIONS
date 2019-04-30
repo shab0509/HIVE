@@ -3,7 +3,7 @@ Windowing in Hive is introduced from Hive 0.11.
 
 
 Windowing in Hive includes the following functions:
-
+----------------------------------------------------------------------------
 Lead : The number of rows to lead can optionally be specified. If the number of rows to lead is not specified, the lead is one row.
        Returns null when the lead for the current row extends beyond the end of the window.
 
@@ -17,6 +17,7 @@ LAST_VALUE  : It is the reverse of FIRST_VALUE. It returns the value of the last
 			  With the below query, you can see the last row high price value of the ticker for all the days. 
 
 The OVER clause(OVER with standard aggregates:)
+----------------------------------------------------------------------------
 1.COUNT
 2.SUM
 3.MIN
@@ -28,6 +29,7 @@ OVER with PARTITION BY and ORDER BY with one or more partitioning and/or orderin
 
 
 Analytics functions
+----------------------------------------------------------------------------
 1.RANK
 2.ROW_NUMBER
 3.DENSE_RANK
