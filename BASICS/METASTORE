@@ -8,22 +8,17 @@ METASTORE : It is the internal database of hive which is responsible for managin
             some other external database like mysql ,ORACLE ,SQLSERVER ,DB2, etc as our hive database. 
    
 Configure metastore in hive:
-
+-----------------------------------------
 > Internal or local or embedded metastore (by default "derby")
 > External or remote meta store [MYSQL/MS-SQL/ORACLE/DERBY]
 
 metastore configuration will be a part of the 
 $HIVE_HOME/conf/hive-site.xml file
 
-below are the properties we need to add in the hive component:-
-
-1. Driver class Details
-2. Connection URL Details
-3. Username Details
-4. Password
 
 Problem  with derby embedded metastore:
-
+-----------------------------------------
 It is a single user metastore i.e if one user is already using hive & another user trying to access we will get 
 the following error.
+
 "Another instance of derby may have already booted to database /home/gopalkrishna/PRAC/Hive/Metastroe_db"
