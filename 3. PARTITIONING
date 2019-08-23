@@ -102,9 +102,9 @@ insert overwrite table sba3 partition (area) select id,rep,sal,area,year from sb
 
 ALTER PARTITION 
 --------------------------------------------------
-
+show partitions <tablename>;
+alter table sbapartitab ADD IF NOT EXISTS PARTITION(country = 'USA',year = 2017);
 alter table sbapartitab DROP IF EXISTS PARTITION(country = 'USA',year = 2017);
 
-alter table sbapartitab ADD IF NOT EXISTS PARTITION(country = 'USA',year = 2017);
-
-show partitions <tablename>;
+ALTER TABLE table_name PARTITION (partition_spec) RENAME TO PARTITION (partition_spec);
+ALTER TABLE employee PARTITION (year=’1203’) RENAME TO PARTITION (Yoj=’1203’);
