@@ -1,0 +1,78 @@
+ACID transactions in Hive
+--------------------------------------------------------------------
+Now a days there is growing need of updating/deleting of data in hive. Lets have quick look at how to update/delete data in ACID tables in hive.
+Minimum pre-requisites to perform Hive CRUD using ACID operations are —
+
+1. Hive version 0.14 and later
+2. Table created with file format must be in ORC file format with TBLPROPERTIES(“transactional”=”true”)
+3. Table must be CLUSTERED BY with Bucketing
+4. External tables cannot be made ACID tables since the changes on external tables are beyond the control of the compactor (HIVE-13175)
+5. BEGIN, COMMIT, and ROLLBACK are not yet supported, all language operations are auto-commit
+6. Reading/writing to an ACID table from a non-ACID session is not allowed.
+   In other words, the Hive transaction manager must be set to
+   "org.apache.hadoop.hive.ql.lockmgr.DbTxnManager" in order to work with ACID tables
+
+7. LOAD DATA… statement is not supported with transactional tables. (This was not properly enforced until HIVE-16732)
+
+8. Configuration parameters for supporting transactions(added in Hive 0.14):
+        set hive.support.concurrency=true;
+        set hive.enforce.bucketing=true;
+        set hive.exec.dynamic.partition.mode=nonstrict;
+        set hive.txn.manager=org.apache.hadoop.hive.ql.lockmgr.DbTxnManager;
+        set hive.compactor.initiator.on=true;
+        set hive.compactor.worker.threads=1;
+
+
+-- Create temporary table 'emp_temp'
+      CREATE TEMPORARY TABLE emp_temp(id INT, name STRING, location STRING)
+      ROW FORMAT DELIMITED
+      FIELDS TERMINATED BY ','
+      LINES TERMINATED BY '\n';
+
+
+-- Load 'sample.data' into table 'emp_temp'
+      LOAD DATA LOCAL INPATH '/path/to/input/file/sample.data' INTO TABLE emp_temp;
+
+-- Now create main table 'emp_tbl' with file format 'ORC'
+      CREATE TABLE emp_tbl(id INT, name STRING, location STRING)
+      CLUSTERED BY (ID) INTO 2 BUCKETS
+      ROW FORMAT DELIMITED
+      FIELDS TERMINATED BY '\t'
+      LINES TERMINATED BY '\n'
+      STORED AS ORC
+      TBLPROPERTIES("orc.compress.size"="1024", "transactional"="true");
+
+-- Load data into table 'emp_tbl' from temporary table 'emp_temp'
+   FROM emp_temp
+   INSERT INTO emp_tbl
+   SELECT id, name, location
+   ORDER BY 1;
+
+
+-------------------
+CREATE [EXTERNAL] TABLE OrcExampleTable
+(clientid int, name string, address string, age int)
+stored as orc
+TBLPROPERTIES (
+"orc.compress"="ZLIB",
+"orc.compress.size"="262144",
+"orc.create.index"="true",
+"orc.stripe.size"="268435456",
+"orc.row.index.stride"="3000",
+"orc.bloom.filter.columns"="clientid,age,name");
+
+
+----------------------------------------------------------------------------
+Hive level acid transactional
+----------------------------------------------------------------------------
+
+CREATE TABLE mytable (key int, name string, zip string, is_current boolean)
+CLUSTERED BY (key) INTO 3 BUCKETS
+STORED AS ORC
+TBLPROPERTIES ('transactional'='true');
+
+INSERT INTO mytable VALUES  (1, 'bob',  '95136', true),  (2, 'joe',  '70068', true),  (3, 'steve', '22150', true);
+
+DELETE FROM mytable WHERE key IN (1);
+
+UPDATE mytable SET name = shabi WHERE key =2;

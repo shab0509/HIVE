@@ -1,0 +1,139 @@
+************************************************************
+HIVE PROPERTIES
+************************************************************
+
+set hive.cli.print.current.db=true;
+set hive.cli.print.header=true;
+
+set hive.exec.mode.local.auto=true;
+set hive.exec.parallel=true
+
+set hive.exec.compress.intermediate=true
+set hive.exec.compress.output=true;
+set mapreduce.output.fileoutputformat.compress=true;
+set mapreduce.output.fileoutputformat.compress.codec=org.apache.hadoop.io.compress.BZip2Codec
+
+set hive.exec.dynamic.partition=true;
+set hive.exec.dynamic.partition.mode=nonstrict;
+set hive.exec.max.dynamic.partitions.pernode = 100
+set hive.exec.max.dynamic.partitions = +1000
+set hive.exec.max.created.files = 100000
+
+set hive.enforce.bucketing=true;
+
+set hive.vectorized.execution = true
+set hive.vectorized.execution.enabled = true
+
+set hive.auto.convert.join=true;
+set hive.mapjoin.smalltable.filesize=30000000;
+set hive.optimize.bucketmapjoin = true
+
+
+**********************************************************************************************
+Hive TBLPROPERTIES
+**********************************************************************************************
+
+TBLPROPERTIES ("comment"="table_comment")
+TBLPROPERTIES ("hbase.table.name"="table_name") //for hbase integration
+TBLPROPERTIES ("immutable"="true") or ("immutable"="false")
+TBLPROPERTIES ("orc.compress"="ZLIB") or ("orc.compress"="SNAPPY") or ("orc.compress"="NONE")
+TBLPROPERTIES ("transactional"="true") or ("transactional"="false") default is "false"
+TBLPROPERTIES ("NO_AUTO_COMPACTION"="true") or ("NO_AUTO_COMPACTION"="false"), the default is "false"
+TBLPROPERTIES ('comment' = 'view_fc_purchaseorderdetails')
+
+
+
+**********************************************************************************************
+SPARK IMPORT'S
+**********************************************************************************************
+import org.apache.spark.SparkConf
+import org.apache.spark.SparkContext
+import org.apache.spark.sql.SQLContext
+import org.apache.spark.rdd.RDD
+import org.apache.spark.sql.functions._
+import org.apache.spark.sql.functions.desc
+import org.apache.spark.sql
+
+val sqlContext = new org.apache.spark.sql.SQLContext(sc)
+val sc = new sparkContext()
+
+
+**********************************************************************************************
+GREP,AWK & SED
+**********************************************************************************************
+
+sed 's/#/ /' REPLSERVER_Fc_ProductInfo2.csv | REPLSERVER_Fc_ProductInfonew.csv
+grep "#" REPLSERVER_Fc_ProductInfo2.csv
+
+cat file.txt | tr -d " \t\n\r"  <for replacing blank/white spaces in file>
+
+-------------------------------------------------
+Archiving
+-------------------------------------------------
+There are 3 settings that should be configured before archiving is used. (Example values are shown.)
+
+set hive.archive.enabled=true;
+set hive.archive.har.parentdir.settable=true;
+set har.partfile.size=1099511627776;
+
+hive.archive.enabled controls whether archiving operations are enabled.
+
+---------------------------------------------------------------
+DATABASES LEVEL
+---------------------------------------------------------------
+
+describe <data base name>
+
+CREATE (DATABASE|SCHEMA) [IF NOT EXISTS] database_name[COMMENT 'database_comment'] [LOCATION hdfs_path];
+hive -help >> for CLI help
+
+HiveServer2 reads hive-site.xml as well as hiveserver2-site.xml that are available in the $HIVE_CONF_DIR or in the classpath.
+If HiveServer2 is using the metastore in embedded mode, hivemetastore-site.xml also is loaded.
+
+The order of precedence of the config files is as follows (later one has higher precedence) –
+hive-site.xml -> hivemetastore-site.xml -> hiveserver2-site.xml -> '-hiveconf' commandline parameters.
+
+CREATE DATABASE fcdblog_new
+comment 'Holds almost master tables like POD,POM'
+WITH DBPROPERTIES ('creator' = 'Shabi', 'date' = '2019-17-07');
+
+For Remote Login
+-----------------
+hive -h 131.0.27.93 -p webadmin
+hive -h 131.0.27.93
+
+Hive Parametre passing
+-----------------------------------------
+$ hive -hiveconf dt=2011-01-01
+hive> INSERT OVERWRITE table distinct_ip_in_logs
+	 > PARTITION (hit_date=${dt})
+	 > SELECT distinct(ip) as ip from weblogs
+	 > WHERE hit_date='${hiveconf:dt}';
+
+hive     > CREATE TABLE state_city_for_day (state string,city string)
+         > PARTITIONED BY (hit_date string);
+
+hive     > INSERT OVERWRITE table state_city_for_day PARTITION(${hiveconf:df})
+      	 > SELECT distinct(state,city) FROM distinct_ip_in_logs
+ 	       > JOIN geodata ON (distinct_ip_in_logs.ip=geodata.ip)
+	       > WHERE (hit_date='${hiveconf:dt}');
+
+
+
+For Big Files
+---------------------------
+set hive.execution.engine=tez;
+set hive.auto.convert.join=true;
+set hive.auto.convert.join.noconditionaltask=true;
+set hive.auto.convert.join.noconditionaltask.size=405306368;
+set hive.vectorized.execution.enabled=true;
+set hive.vectorized.execution.reduce.enabled =true;
+set hive.cbo.enable=true;
+set hive.compute.query.using.stats=true;
+set hive.stats.fetch.column.stats=true;
+set hive.stats.fetch.partition.stats=true;
+set hive.merge.mapfiles =true;
+set hive.merge.mapredfiles=true;
+set hive.merge.size.per.task=134217728;
+set hive.merge.smallfiles.avgsize=44739242;
+set mapreduce.job.reduce.slowstart.completedmaps=0.8

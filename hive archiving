@@ -1,0 +1,7 @@
+set hive.archive.enabled=true;
+set hive.archive.har.parentdir.settable=true;
+set har.partfile.size=1199511627;
+
+ALTER TABLE table_name ARCHIVE PARTITION (partition_col = partition_col_value, partition_col = partiton_col_value, …);
+
+ALTER TABLE HAR_test UNARCHIVE PARTITION (deptID = 100, deptID = 101, deptID = 102, deptID = 103);
